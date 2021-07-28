@@ -9,6 +9,6 @@
     <?php include("../controllers/MiddlewareController.php");?>
 </head>
 <body>
-    <?php include("../componentes/header.php");?>
+    <?php include("../components/header.php");?>
 </body>
 </html>

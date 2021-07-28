@@ -7,7 +7,6 @@
             setMessage('Molimo unesite sve podatke',500);
             header('location: ../public/login.php');
         }
-
         $username = $_POST['username'];
         $password = md5($_POST['password']);
         $query = "SELECT * FROM users where (username = '{$username}' OR email = '{$username}') AND password = '{$password}' LIMIT 1";
@@ -33,27 +32,43 @@
         }
     }
     if(isset($_POST['register'])){
-        $username = $_POST['username'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = md5($_POST['password']);
-        $role = $_POST['role'];
-        $query = "INSERT INTO users(username,first_name,last_name,email,password,role) VALUES ('{$username}','{$first_name}','{$last_name}','{$email}','{$password}','{$role}')";
-        if($database->query($query) === TRUE){
-            $_SESSION['user']['uid'] = $database->insert_id;
-            $_SESSION['user']['username'] = $username;
-            $_SESSION['user']['role'] = $role;
+        $user_data = [];
+        $user_data['username'] = $_POST['username'];
+        $user_data['first_name'] = $_POST['first_name'];
+        $user_data['last_name'] = $_POST['last_name'];
+        $user_data['email'] = $_POST['email'];
+        $user_data['password'] = md5($_POST['password']);
+        $user_data['role'] = $_POST['role'];
+        $userModelInstance = new UserModel($user_data);
+        $exists = UserModel::doesExist($userModelInstance->username);
+        
+        if(!$exists){
+            $user_id = $userModelInstance->save();
+            if($user_id == -1){
+                setMessage("Doslo je do greske prilikom kreiranja naloga.",500);
+                header("location:../index.php");
+                return;
+            }
+
+            $_SESSION['user']['uid'] = $user_id;
+            $_SESSION['user']['username'] = $userModelInstance->username;
+            $_SESSION['user']['role'] = $userModelInstance->role;
             setMessage("Uspesna registracija! Dobro dosli!",200);
-            if($role == 'buyer'){
+            if($userModelInstance->role == 'buyer'){
                 header('location: ../public/home.php');
+                return;
             }
-            if($role == 'seller'){
+            if($userModelInstance->role == 'seller'){
                 header('location: ../public/seller.php');
+                return;
             }
-            if($role == 'admin'){
+            if($userModelInstance->role == 'admin'){
                 header("location: ../public/admin.php");
+                return;
             }
+        }
+        else{
+            setMessage("Korisnik sa ovim korisnickim imenom vec postoji. Odaberite novo korisnicko ime i pokusajte ponovo.",500);
         }
     }
     if(isset($_GET['find_user'])){
@@ -95,7 +110,7 @@
             echo json_encode($response);
             return;
         }
-        $userExists = doesExist($username);
+        $userExists = UserModel::doesExist($username);
         if($userExists){
             $response['status']['status'] = 500;
             $response['status']['message'] = "Korisnik sa ovim korisnickim imenom ili email adresom vec postoji";

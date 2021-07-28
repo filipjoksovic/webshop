@@ -6,12 +6,11 @@ $(document).ready(function(){
             'get_categories': 1
         },
         success:function(response){
-            let responseData = JSON.parse(response);
-            console.log(JSON.parse(response));
-            let categories = responseData.response;
+            let categories = JSON.parse(response).response
+            console.log(categories)
             categories.forEach(category => {
                 console.log(category)
-                let element = `<option value = ${category.id}>${category.category_name}</option>`
+                let element = `<option value = ${category.id}>${category.title}</option>`
                 $("#category").append(element);
             });
         },
@@ -31,7 +30,7 @@ $("#addImage").click(function(){
     let element = `
         <div class="input-group mb-3">
             <div class="custom-file cf-${inputIndex}">
-                <input type="file" class="custom-file-input" name = "product_images[]" accept = "image/png, image/gif, image/jpeg" id="productImage" aria-describedby="inputGroupFileAddon01">
+                <input type="file" class="custom-file-input" name = "product_images[]" accept = "image/png, image/gif, image/jpeg, image/webp" id="productImage" aria-describedby="inputGroupFileAddon01">
                 <label class="custom-file-label" for="productImage">Odaberi sliku</label>
             </div>
         </div>

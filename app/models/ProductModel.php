@@ -1,16 +1,17 @@
 <?php 
     class ProductModel{
+        public $id;
         public $product_name;
         public $category_id;
         public $price;
-        public $quantity;
+        public $stock;
         public $owner_id;
 
         function __construct($product_data){
             $this->product_name = $product_data['product_name'];
             $this->category_id = $product_data['category_id'];
             $this->price = $product_data['price'];
-            $this->quantity = $product_data['quantity'];
+            $this->stock = $product_data['stock'];
             $this->owner_id = $product_data['owner_id'];
         }
         function validateData($product_data){
@@ -29,7 +30,7 @@
                 header("location:../public/seller.php");
                 return;
             }
-            if (!isset($product_data['quantity']) || $product_data['quantity'] == null || $product_data['quantity'] == "") {
+            if (!isset($product_data['stock']) || $product_data['stock'] == null || $product_data['stock'] == "") {
                 setMessage("Molimo navedite stanje proizvoda", 500);
                 header("location:../public/seller.php");
                 return;
@@ -37,16 +38,18 @@
         }
         function save(){
             require "../controllers/DatabaseController.php";
-            require "../controllers/SessionController";
-            $query = "INSERT INTO products(product_name,owner_id,category_id,price,quantity) 
-                      VALUES ('{$this->product_name}',{$this->owner_id},{$category_id},{$price},{$quantity})";
+            require_once "../controllers/SessionController.php";
+            $query = "INSERT INTO products(product_name,owner_id,category_id,price,stock) 
+                      VALUES ('{$this->product_name}',{$this->owner_id},{$this->category_id},{$this->price},{$this->stock})";
             if($database->query($query) === TRUE){
                 setMessage("Uspesno dodat proizvod u bazu podataka",200);
+                $this->id =  $database->insert_id;
             }
             else{
+                $this->id = -1;
                 setMessage($database->error,500);
             }
-            header("location: ../public/seller.php");
+            // header("location: ../public/seller.php");
         }
     }
 ?>

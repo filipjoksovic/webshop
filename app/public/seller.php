@@ -51,13 +51,13 @@
                                 <input type="number" id="price" name="price" class="form-control" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="quantity">Stanje</label>
-                                <input type="number" id="quantity" name="quantity" class="form-control">
+                                <label for="stock">Stanje</label>
+                                <input type="number" id="stock" name="stock" class="form-control">
                             </div>
                             <div id="imageInputs">
                                 <div class="input-group mb-3">
                                     <div class="custom-file cf-1">
-                                        <input type="file" class="custom-file-input" name="product_images" id="productImage" accept="image/png, image/gif, image/jpeg" aria-describedby="inputGroupFileAddon01">
+                                        <input type="file" class="custom-file-input" name="product_images[]" id="productImage" accept="image/png, image/gif, image/jpeg, image/webp" aria-describedby="inputGroupFileAddon01">
                                         <label class="custom-file-label" for="productImage">Odaberi sliku</label>
                                     </div>
                                 </div>
