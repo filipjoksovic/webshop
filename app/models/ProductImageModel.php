@@ -7,7 +7,9 @@ class ProductImageModel{
     function __construct($image_data){
         $this->product_id = $image_data['product_id'];
         $this->path = $image_data['path'];
-        $this->temp_path = $image_data['temp_path'];
+        if(isset($image_data['temp_path'])){
+            $this->temp_path = $image_data['temp_path'];
+        }
     }
     function validateData(){
         require "../controllers/SessionController.php";
@@ -40,6 +42,27 @@ class ProductImageModel{
             echo $database->error;
             return false;
         }
+    }
+    static function getProductImages($product_id){
+        require "../controllers/DatabaseController.php";
+
+        $query = "SELECT * FROM product_images WHERE product_id = {$product_id}";
+
+        $results = $database->query($query);
+        $product_images = [];
+        while($row = $results->fetch_assoc()){
+            $productImageModelInstance = new ProductImageModel($row);
+            array_push($product_images, $productImageModelInstance);
+        }
+        return $product_images;
+    }
+    static function getMainImage($product_id){
+        require "../controllers/DatabaseController.php";
+
+        $query = "SELECT * FROM product_images WHERE product_id = {$product_id} LIMIT 1";
+
+        $image = $database->query($query)->fetch_assoc()['path'];
+        return $image;
     }
 }
 

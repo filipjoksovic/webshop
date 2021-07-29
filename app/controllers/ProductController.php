@@ -42,6 +42,22 @@
             setMessage("Uspesno dodavanje proizvoda",200);
             header("location:../public/seller.php");
         }
+        if(isset($_POST['delete_product'])){
+            $product_id = $_POST['product_id'];
+            try{
+                $delete_res = ProductModel::deleteProduct($product_id);
+                $status['status'] = 200;
+                $status['message'] = "Proizvod je uspesno izbrisan iz baze podataka";
+            }
+            catch(Exception $e){
+                $status['status'] = 500;
+                $status['message'] = "Doslo je do greske prilikom uklanjanja proizvoda iz baze podataka.";
+            }
+            finally{
+                echo json_encode($status);
+            }
+        }
+
     }
 
 ?>

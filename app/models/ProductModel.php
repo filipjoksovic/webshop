@@ -6,8 +6,13 @@
         public $price;
         public $stock;
         public $owner_id;
+        public $images;
+        public $category_title;
 
         function __construct($product_data){
+            if(isset($product_data['id'])){
+                $this->id = $product_data['id'];
+            }
             $this->product_name = $product_data['product_name'];
             $this->category_id = $product_data['category_id'];
             $this->price = $product_data['price'];
@@ -50,6 +55,34 @@
                 setMessage($database->error,500);
             }
             // header("location: ../public/seller.php");
+        }
+        static function getAllProducts(){
+            require "../controllers/DatabaseController.php";
+            require "../models/ProductImageModel.php";
+
+            $query = "SELECT * FROM products";
+
+            $products = [];
+
+            $results = $database->query($query);
+            while($row = $results->fetch_assoc()){
+                $product = new ProductModel($row);
+                $product->main_image = ProductImageModel::getMainImage($product->id);
+                array_push($products,$product);
+            }
+            return $products;
+        }
+        static function deleteProduct($product_id){
+            require "../controllers/DatabaseController.php";
+
+            $query = "DELETE * from products WHERE id = {$product_id}";
+
+            if($database->query($query) === TRUE){
+                return 1;
+            }
+            else{
+                return -1;
+            }
         }
     }
 ?>

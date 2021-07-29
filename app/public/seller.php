@@ -17,13 +17,50 @@
         <h1 class="text-center">Pocetna</h1>
     </div>
     <div class="quick-actions mt-3">
-        <div class="action" id="addProductAction" data-toggle="modal" data-target="#addProduct">
+        <div class="action shadow-custom" id="addProductAction" data-toggle="modal" data-target="#addProduct">
             Dodaj proizvod
         </div>
         <!-- <div class="action" id = "produc">
             Pregled proizvoda
         </div> -->
 
+    </div>
+    <div class="container mt-5">
+        <h3 class="text-center">Pregled proizvoda</h3>
+        <?php require "../models/ProductModel.php";
+        $products = ProductModel::getAllProducts();
+        ?>
+        <div class="products-container">
+            <?php foreach ($products as $product) : ?>
+                <div class="seller product shadow-custom">
+                    <div class="product-image">
+                        <img src="<?php echo $product->main_image; ?>">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">
+                            <span><?php echo $product->id; ?></span>
+                            <span><?php echo $product->product_name; ?></span>
+                        </div>
+                        <div class="product-details">
+                            <div class="product-data">
+                                <span class="product-stock">Stanje: <?php echo $product->stock; ?></span>
+                                <span class="product-price">Cena: <?php echo $product->price; ?></span>
+                                <span class="product-orders">Broj porudzbina: <?php echo $product->stock; ?></span>
+                            </div>
+                            <div class="product-actions">
+                                <div class="product-action shadow-custom border-animate-warning"><i class="fas fa-edit"></i>
+                                    <span class="action-text">Izmeni proizvod</span>
+                                </div>
+                                <div class="product-action shadow-custom border-animate-danger"><i class="fas fa-trash"></i>
+                                    <span class="action-text">Ukloni proizvod</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">

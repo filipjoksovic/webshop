@@ -1,65 +1,101 @@
-*{
-    font-family: 'Open Sans',
-    sans-serif !important;
-    --primary:#6fb9ff;
+* {
+    font-family: 'Poppins',
+    sans-serif ;
+    --background: #EEF2F7;
+    --primary: #6fb9ff;
+    --neumorphic-default: 10px 10px 20px rgba(219, 223, 227, 100),
+        -10px -10px 20px rgba(255, 255, 255, 100),
+        inset 7px 7px 12px rgba(217, 220, 225, 0),
+        inset -7px -7px 12px rgba(255, 255, 255, 0);
+    --neumorphic-pressed: 10px 10px 20px rgba(219, 223, 227, 0),
+                    -10px -10px 20px rgba(255, 255, 255, 0),
+                    inset 7px 7px 12px rgba(217, 220, 225, 100),
+                    inset -7px -7px 12px rgba(255, 255, 255, 100);
 }
-body{
-    background: #EEF2F7;
+
+.shadow-custom {
+    box-shadow: var(--neumorphic-default);
+    background-color: var(--background);
+    transition: box-shadow 500ms ease-in-out;
 }
-.btn-primary{
+
+.shadow-custom:hover {
+    box-shadow: var(--neumorphic-pressed);
+}
+.border-animate-warning{
+    border-radius: 1rem;
+    transition: border-radius 250ms ease-in-out,background-color 250ms ease-in-out;
+}
+.border-animate-warning:hover {
+    border-radius: 100%;
+    background-color: #ffeaa6;
+    box-shadow: var(--neumorphic-default) !important;
+
+}
+.border-animate-danger {
+    border-radius: 1rem;
+    transition: border-radius 250ms ease-in-out,
+    background-color 250ms ease-in-out;
+    
+}
+
+.border-animate-danger:hover {
+    border-radius: 2rem;
+    background-color: #ff9696;
+    
+    box-shadow: var(--neumorphic-default) !important;
+}
+
+body {
+    background: var(--background);
+}
+
+.btn-primary {
     background-color: var(--primary) !important;
     border: none;
     /* transition: backdrop-filter .25s ease-in-out; */
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: #568fc5 !important;
 }
 
-.quick-actions{
+.quick-actions {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
-.quick-actions > .action{
-    background-color: white;
+
+.quick-actions>.action {
+    background-color: var(--background);
     /* border: 1px solid #e7e7e7; */
     padding: 2rem;
     margin: .5rem;
     border-radius: .5rem;
-    width: 25%;
     text-align: center;
-    font-weight: 600; 
+    font-weight: 600;
     font-size: large;
     cursor: pointer;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
-      0 2px 4px rgba(0, 0, 0, 0.07),
-      0 4px 8px rgba(0, 0, 0, 0.07),
-      0 8px 16px rgba(0, 0, 0, 0.07),
-      0 16px 32px rgba(0, 0, 0, 0.07),
-      0 32px 64px rgba(0, 0, 0, 0.07);
-    transition: background-color .25s ease-in-out,
-                color .25s ease-in-out;
 }
-.action:hover{
-    background-color: var(--primary);
-    color:white
-}
-.users-container{
-    display:flex;
+
+
+.users-container {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
-.users-container > .user{
+
+.users-container>.user {
     background-color: white;
     border: 2px solid #e7e7e7;
-     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
-     0 2px 4px rgba(0, 0, 0, 0.07),
-     0 4px 8px rgba(0, 0, 0, 0.07),
-     0 8px 16px rgba(0, 0, 0, 0.07),
-     0 16px 32px rgba(0, 0, 0, 0.07),
-     0 32px 64px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
+        0 2px 4px rgba(0, 0, 0, 0.07),
+        0 4px 8px rgba(0, 0, 0, 0.07),
+        0 8px 16px rgba(0, 0, 0, 0.07),
+        0 16px 32px rgba(0, 0, 0, 0.07),
+        0 32px 64px rgba(0, 0, 0, 0.07);
     border-radius: 1rem;
     margin: 1rem;
     padding: 1rem;
@@ -68,26 +104,153 @@ body{
     justify-content: center;
     align-items: center;
 }
-.user > .user-icon{
-     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
-     0 2px 4px rgba(0, 0, 0, 0.07),
-     0 4px 8px rgba(0, 0, 0, 0.07),
-     0 8px 16px rgba(0, 0, 0, 0.07),
-     0 16px 32px rgba(0, 0, 0, 0.07),
-     0 32px 64px rgba(0, 0, 0, 0.07);
-     border-radius: 100%;
+
+.user>.user-icon {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
+        0 2px 4px rgba(0, 0, 0, 0.07),
+        0 4px 8px rgba(0, 0, 0, 0.07),
+        0 8px 16px rgba(0, 0, 0, 0.07),
+        0 16px 32px rgba(0, 0, 0, 0.07),
+        0 32px 64px rgba(0, 0, 0, 0.07);
+    border-radius: 100%;
     padding: 2rem;
-    flex:.5;
+    flex: .5;
 }
-.user > .user-icon > img{
+
+.user>.user-icon>img {
     filter: invert(55%) sepia(63%) saturate(4473%) hue-rotate(2deg) brightness(109%) contrast(98%);
-    width:80px;
+    width: 80px;
     height: 80px;
     object-fit: contain;
 }
-.user > .user-info{
-    flex:1;
+
+.user>.user-info {
+    flex: 1;
     text-align: center;
     padding: 1rem;
     margin-top: 1rem;
+}
+
+.products-container{
+    display:flex;
+    flex-wrap: wrap;
+}
+.seller.product {
+    display: flex;
+    flex: 0.5;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+}   
+.seller.product > .product-image{
+    flex: 0.4;
+    /* width: 10rem; */
+    /* height: 10rem; */
+    border-radius: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+}
+.product-image > img{
+    max-width : 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+}
+.seller.product > .product-info{
+    flex: 0.6;
+    padding: 1rem;
+}
+.product-info > .product-title{
+    text-align: center;
+    font-weight: 500;
+    font-size: larger;
+    display: flex;
+    justify-content: space-between;
+
+}
+.product-info>.product-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.product-info>.product-details > .product-data {
+    font-weight: 300;
+    font-size: medium;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+.product-details > .product-actions{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+
+@media only screen and (max-width:768px){
+    .products-container{
+        flex-direction: column;
+    }
+    .seller.product{
+        flex-direction: column;
+    }
+}
+.product-action {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* display: inline-block; */
+    color: #202022;
+    font-size: x-large;
+    padding: 2rem;
+    margin: .5rem 1rem;
+    background: var(--background);
+    /* border-radius: 100%; */
+    width:50px;
+    height: 50px;
+    /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.product-action .action-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #202022;
+    color: #fff;
+    text-align: center;
+    padding: 10px 10px;
+    border-radius: 6px;
+    font-size: medium;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.product-action .action-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #202020 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.product-action:hover .action-text {
+    visibility: visible;
+    opacity: 1;
 }
