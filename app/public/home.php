@@ -13,6 +13,7 @@
     <?php include("../components/header.php"); ?>
     <?php include("../components/search.php"); ?>
     <?php include("../components/message.php"); ?>
+    <div id="alertPlaceholder"></div>
     <div class="container">
         <div class="container mt-5">
             <h3 class="text-center">Pregled proizvoda</h3>
@@ -51,6 +52,7 @@
             </div>
         </div>
     </div>
+    <script src = "../resources/js/home.js"></script>
 </body>
 
 </html>
