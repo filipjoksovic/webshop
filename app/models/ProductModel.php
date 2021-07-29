@@ -2,6 +2,7 @@
     class ProductModel{
         public $id;
         public $product_name;
+        public $description;
         public $category_id;
         public $price;
         public $stock;
@@ -14,6 +15,9 @@
                 $this->id = $product_data['id'];
             }
             $this->product_name = $product_data['product_name'];
+            if(isset($product_data['description'])){
+            $this->description = $product_data['description'];
+            }
             $this->category_id = $product_data['category_id'];
             $this->price = $product_data['price'];
             $this->stock = $product_data['stock'];

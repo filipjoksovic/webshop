@@ -38,11 +38,25 @@
     background-color 250ms ease-in-out;
     
 }
-
 .border-animate-danger:hover {
     border-radius: 2rem;
     background-color: #ff9696;
     
+    box-shadow: var(--neumorphic-default) !important;
+}
+.border-animate-primary {
+    border-radius: 1rem;
+    transition: border-radius 250ms ease-in-out,
+        background-color 250ms ease-in-out,
+        color 250ms ease-in-out;
+
+}
+
+.border-animate-primary:hover {
+    border-radius: 2rem;
+    background-color: #96d8ff;
+    color: white;
+
     box-shadow: var(--neumorphic-default) !important;
 }
 
@@ -60,6 +74,53 @@ body {
     background-color: #568fc5 !important;
 }
 
+.search-container{
+    width: 80%;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.search-container > .search-form{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+.search-form > .search-input{
+    padding: 1rem;
+    outline: 0;
+    border: none;
+    border-radius: 2rem;
+    flex: .8;
+    margin: .1rem;
+    transition: all 250ms ease-in-out;
+}
+.search-form>.search-button {
+    padding: 1rem;
+    outline: 0;
+    border: none;
+    border-radius: 2rem;
+    flex: .1;
+    margin: .1rem;
+    transition: all 250ms ease-in-out;
+    color:#555555;
+}
+.search-form>.search-button:hover{
+    border-radius: 1rem;
+    color:#202020;
+
+}
+.search-input:focus{
+    box-shadow: var(--neumorphic-pressed);
+    flex: .7;
+    border-radius: 1rem;
+}
+.search-input:focus + .search-button{
+    flex: .15;
+    border-radius: 1rem;
+    color:#202020
+
+}
 .quick-actions {
     display: flex;
     justify-content: center;
@@ -204,19 +265,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* display: inline-block; */
     color: #202022;
     font-size: x-large;
     padding: 2rem;
     margin: .5rem 1rem;
     background: var(--background);
-    /* border-radius: 100%; */
     width:50px;
     height: 50px;
-    /* If you want dots under the hoverable text */
+    cursor: pointer;
 }
 
-/* Tooltip text */
 .product-action .action-text {
     visibility: hidden;
     width: 120px;
@@ -226,18 +284,14 @@ body {
     padding: 10px 10px;
     border-radius: 6px;
     font-size: medium;
-    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     bottom: 125%;
     left: 50%;
     margin-left: -60px;
-    /* Fade in tooltip */
     opacity: 0;
     transition: opacity 0.3s;
 }
-
-/* Tooltip arrow */
 .product-action .action-text::after {
     content: "";
     position: absolute;
@@ -249,8 +303,46 @@ body {
     border-color: #202020 transparent transparent transparent;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .product-action:hover .action-text {
     visibility: visible;
     opacity: 1;
+}
+.user.products-container{
+    display: flex;
+    flex-direction: row;
+}
+.user.product{
+    display:flex;
+    width: 100%;
+    padding: 2rem;
+    border-radius: 2rem;
+    margin: 1rem 0;
+}
+.user.product > .product-image{
+    flex: 0.4;
+}
+.user.product>.product-info {
+    flex: 0.6;
+}
+.user.product>.product-info > .product-title{
+    font-weight: 800;
+    font-size: x-large;
+    text-align: center;
+    width: 100% !important;
+    display: block;
+}
+.user.product>.product-info > .product-details > .product-data {
+    font-weight: 500;
+    font-size: large;
+    /* text-align: center; */
+    width: 100% !important;
+    /* display: block; */
+    /* color: red; */
+}
+.user.product>.product-image > img{
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+
 }

@@ -6,5 +6,6 @@
         $_SESSION['user']['username'] = null;
         $_SESSION['user']['role'] = "guest";
     }
+    $_SESSION['cart'] = [];
     header("location: ../public/home.php");
 ?>

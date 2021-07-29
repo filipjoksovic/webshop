@@ -10,10 +10,10 @@
         $username = $_POST['username'];
         $password = md5($_POST['password']);
         $query = "SELECT * FROM users where (username = '{$username}' OR email = '{$username}') AND password = '{$password}' LIMIT 1";
-        $user = $database->query($query);
-        if($user->num_rows > 0){
-            $user = $user->fetch_assoc();
-            $_SESSION['user']['uid'] = $user['user_id'];
+        $result = $database->query($query);
+        if($result->num_rows > 0){
+            $user = $result->fetch_assoc();
+            $_SESSION['user']['uid'] = $user['id'];
             $_SESSION['user']['username'] = $user['username'];
             $_SESSION['user']['role'] = $user['role'];
             if($user['role'] == 'buyer'){

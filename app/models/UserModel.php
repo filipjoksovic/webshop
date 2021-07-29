@@ -33,6 +33,14 @@ class UserModel{
             return true;
         return false;
     }
+    static function getUsername($user_id){
+        require "../controllers/DatabaseController.php";
+
+        $query = "SELECT username FROM users WHERE id = {$user_id} LIMIT 1";
+
+        $res = $database->query($query)->fetch_assoc();
+        return $res['username'];
+    }
 
 }
 
