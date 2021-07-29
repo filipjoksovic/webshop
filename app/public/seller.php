@@ -48,10 +48,10 @@
                                 <span class="product-orders">Broj porudzbina: <?php echo $product->stock; ?></span>
                             </div>
                             <div class="product-actions">
-                                <div class="product-action shadow-custom border-animate-warning"><i class="fas fa-edit"></i>
+                                <div class="product-action shadow-custom border-animate-warning"><i class="fas fa-edit  action-icon"></i>
                                     <span class="action-text">Izmeni proizvod</span>
                                 </div>
-                                <div class="product-action shadow-custom border-animate-danger"><i class="fas fa-trash"></i>
+                                <div class="product-action shadow-custom border-animate-danger"><i class="fas fa-trash  action-icon"></i>
                                     <span class="action-text">Ukloni proizvod</span>
                                 </div>
                             </div>

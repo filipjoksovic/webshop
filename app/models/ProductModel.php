@@ -8,6 +8,7 @@
         public $stock;
         public $owner_id;
         public $images;
+        public $main_image;
         public $category_title;
 
         function __construct($product_data){
@@ -87,6 +88,32 @@
             else{
                 return -1;
             }
+        }
+        static function getProductDetails($pid){
+            require "../controllers/DatabaseController.php";
+
+            $query = "SELECT * FROM products WHERE id = {$pid} LIMIT 1";
+            try{
+                $product = new ProductModel($database->query($query)->fetch_assoc());
+                return $product;
+            }
+            catch(Exception $e){
+                return -1;
+            }
+        }
+        static function getProductDetailsFromArray($ordered_cart){
+            require "../controllers/DatabaseController.php";
+            $products = [];
+            // foreach($product_ids as $product_id){
+            //     $product = ProductModel::getProductDetails($product_id);
+            //     array_push($products,$product);                
+            // }
+            foreach($ordered_cart as $key=>$value){
+                $product = ProductModel::getProductDetails($key);
+                $product->cart_quantity = $value['quantity'];
+                array_push($products,$product);                
+            }
+            return $products;
         }
     }
 ?>

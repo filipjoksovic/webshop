@@ -34,13 +34,13 @@
                             <div class="product-details">
                                 <div class="product-data">
                                     <span class="product-seller">Prodaje: <b><?php echo UserModel::getUsername($product->owner_id); ?></b></span>
-                                    <span class="product-price">Cena: <?php echo $product->price. '.00'; ?></span>
+                                    <span class="product-price">Cena: <?php echo $product->price . '.00'; ?></span>
                                 </div>
                                 <div class="product-actions mb-2">
-                                    <div class="product-action shadow-custom border-animate-primary" onclick = "addToCart(<?php echo $product->id;?>)"><i class="fas fa-shopping-cart"></i>
+                                    <div class="product-action shadow-custom border-animate-primary" onclick="addToCart(<?php echo $product->id; ?>)"><i class="fas fa-shopping-cart  action-icon"></i>
                                         <span class="action-text">Dodaj u korpu</span>
                                     </div>
-                                    <div class="product-action shadow-custom border-animate-primary"><i class="fas fa-bookmark"></i>
+                                    <div class="product-action shadow-custom border-animate-primary"><i class="fas fa-bookmark action-icon"></i>
                                         <span class="action-text">Dodaj u listu zelja</span>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <script src = "../resources/js/home.js"></script>
+    <script src="../resources/js/home.js"></script>
 </body>
 
 </html>

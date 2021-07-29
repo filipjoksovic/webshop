@@ -22,5 +22,21 @@
                 return -1;
             }
         }
+        static function orderCart($product_ids){
+            $products = [];
+            $pids = [];
+            foreach($product_ids as $product_id){
+                if(!array_key_exists(strval($product_id),$pids)){
+                    $pids[strval($product_id)]['quantity'] = 1;
+                }
+                else{
+                    $pids[strval($product_id)]['quantity']++;
+                }
+            }
+            return $pids;
+        }
+        static function emptyCart(){
+            $_SESSION['cart'] = [];
+        }
     }
 ?>
