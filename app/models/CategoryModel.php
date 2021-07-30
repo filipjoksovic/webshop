@@ -53,5 +53,11 @@
             }
             return $categories;
         }
+        static function getCategoryTitle($cat_id){
+            require "../controllers/DatabaseController.php";
+            $query = "SELECT * FROM categories WHERE id = {$cat_id} LIMIT 1";
+            $result = $database->query($query)->fetch_assoc();
+            return $result['title'];
+        }
     }
 ?>

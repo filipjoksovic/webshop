@@ -2,7 +2,7 @@
     class ProductModel{
         public $id;
         public $product_name;
-        public $description;
+        public $product_description;
         public $category_id;
         public $price;
         public $stock;
@@ -16,8 +16,8 @@
                 $this->id = $product_data['id'];
             }
             $this->product_name = $product_data['product_name'];
-            if(isset($product_data['description'])){
-            $this->description = $product_data['description'];
+            if(isset($product_data['product_description'])){
+            $this->product_description = $product_data['product_description'];
             }
             $this->category_id = $product_data['category_id'];
             $this->price = $product_data['price'];
@@ -71,6 +71,7 @@
 
             $results = $database->query($query);
             while($row = $results->fetch_assoc()){
+                var_dump($row);
                 $product = new ProductModel($row);
                 $product->main_image = ProductImageModel::getMainImage($product->id);
                 array_push($products,$product);
@@ -91,10 +92,11 @@
         }
         static function getProductDetails($pid){
             require "../controllers/DatabaseController.php";
-
+            require "../models/CategoryModel.php";
             $query = "SELECT * FROM products WHERE id = {$pid} LIMIT 1";
             try{
                 $product = new ProductModel($database->query($query)->fetch_assoc());
+                $product->category_title = CategoryModel::getCategoryTitle($product->category_id);
                 return $product;
             }
             catch(Exception $e){

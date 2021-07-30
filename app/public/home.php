@@ -43,6 +43,10 @@
                                     <div class="product-action shadow-custom border-animate-primary"><i class="fas fa-bookmark action-icon"></i>
                                         <span class="action-text">Dodaj u listu zelja</span>
                                     </div>
+                                    <a href="./product_details.php?product_id=<?php echo $product->id; ?>" class="product-action shadow-custom border-animate-primary">
+                                        <i class="fas fa-eye action-icon"></i>
+                                        <span class="action-text">Pogledaj proizvod</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
