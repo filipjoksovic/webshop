@@ -12,8 +12,7 @@
 <body>
     <?php include "../components/header.php"; ?>
     <?php include "../components/message.php"; ?>
-    <?php  ?>
-
+    <div id="alertPlaceholder"></div>
     <?php
     require "../models/ProductModel.php";
     require "../models/ProductImageModel.php";
@@ -49,13 +48,15 @@
             </span>
         </div>
         <div class="showcase-actions shadow-custom">
-            <div class="product-actions mb-2">
-                <div class=" shadow-custom border-animate-danger " onclick="removeFromCart(<?php echo $product->id; ?>)"><i class="fas fa-trash action-icon"></i>
-                    <span class="action-text">Ukloni iz korpe</span>
-                </div>
+            <div class="showcase-action shadow-custom border-animate-primary " onclick="addToCart(<?php echo $product->id; ?>)"><i class="fas fa-shopping-cart action-icon"></i>
+                <span class="action-text">Dodaj u korpu</span>
+            </div>
+            <div class="showcase-action shadow-custom border-animate-warning " onclick="addToWishlist(<?php echo $product->id; ?>)"><i class="fas fa-bookmark action-icon"></i>
+                <span class="action-text">Dodaj u listu zelja</span>
             </div>
         </div>
     </div>
+    <script src = "../resources/js/details.js"></script>
 </body>
 
 </html>

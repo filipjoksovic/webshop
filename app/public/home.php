@@ -19,6 +19,8 @@
             <h3 class="text-center">Pregled proizvoda</h3>
             <?php require "../models/ProductModel.php";
             require "../models/UserModel.php";
+            require "../models/CategoryModel.php";
+
             $products = ProductModel::getAllProducts();
             ?>
             <div class="user products-container">
@@ -29,7 +31,7 @@
                         </div>
                         <div class="product-info">
                             <div class="product-title">
-                                <span><?php echo $product->product_name; ?></span>
+                                <span><?php echo $product->product_name . " - " . CategoryModel::getCategoryTitle($product->category_id); ?></span>
                             </div>
                             <div class="product-details">
                                 <div class="product-data">
@@ -37,9 +39,15 @@
                                     <span class="product-price">Cena: <?php echo $product->price . '.00'; ?></span>
                                 </div>
                                 <div class="product-actions mb-2">
-                                    <div class="product-action shadow-custom border-animate-primary" onclick="addToCart(<?php echo $product->id; ?>)"><i class="fas fa-shopping-cart  action-icon"></i>
-                                        <span class="action-text">Dodaj u korpu</span>
-                                    </div>
+                                    <?php if ($product->stock > 0) : ?>
+                                        <div class="product-action shadow-custom border-animate-primary" onclick="addToCart(<?php echo $product->id; ?>)"><i class="fas fa-shopping-cart  action-icon"></i>
+                                            <span class="action-text">Dodaj u korpu</span>
+                                        </div>
+                                    <?php else : ?>
+                                        <div class="product-action shadow-custom border-animate-danger"><i class="fas fa-shopping-cart  action-icon"></i>
+                                            <span class="action-text">Nema na stanju</span>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="product-action shadow-custom border-animate-primary"><i class="fas fa-bookmark action-icon"></i>
                                         <span class="action-text">Dodaj u listu zelja</span>
                                     </div>

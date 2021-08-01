@@ -13,6 +13,7 @@
 <body>
     <?php include("../components/header.php"); ?>
     <?php include("../components/message.php"); ?>
+    <div id="alertPlaceholder"></div>
     <div class="container mt-5">
         <h1 class="text-center">Pocetna</h1>
     </div>
@@ -28,7 +29,7 @@
     <div class="container mt-5">
         <h3 class="text-center">Pregled proizvoda</h3>
         <?php require "../models/ProductModel.php";
-        $products = ProductModel::getAllProducts();
+        $products = ProductModel::getProductsFromSeller($_SESSION['user']['uid']);
         ?>
         <div class="products-container">
             <?php foreach ($products as $product) : ?>
@@ -51,7 +52,7 @@
                                 <div class="product-action shadow-custom border-animate-warning"><i class="fas fa-edit  action-icon"></i>
                                     <span class="action-text">Izmeni proizvod</span>
                                 </div>
-                                <div class="product-action shadow-custom border-animate-danger"><i class="fas fa-trash  action-icon"></i>
+                                <div class="product-action shadow-custom border-animate-danger" data-toggle="modal" data-target="#deleteConfirm" onclick = "prepareDelete(<?php echo $product->id;?>)"><i class="fas fa-trash  action-icon"></i>
                                     <span class="action-text">Ukloni proizvod</span>
                                 </div>
                             </div>
@@ -62,6 +63,38 @@
             <?php endforeach; ?>
         </div>
     </div>
+    <div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Potvrda uklanjanja</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid text-center">
+                        Uklanjanjem proizvoda iz baze podataka brisu se svi tragovi postojanja proizvoda u prodavnici, ukljucujuci statistiku prodaje. <br>
+                        Nastavi dalje?
+                    </div>
+                    <input type="hidden" id = "delete_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Otkazi</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Nastavi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#exampleModal').on('show.bs.modal', event => {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+            // Use above variables to manipulate the DOM
+
+        });
+    </script>
     <!-- Modal -->
     <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -90,6 +123,10 @@
                             <div class="form-group">
                                 <label for="stock">Stanje</label>
                                 <input type="number" id="stock" name="stock" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Opis</label>
+                                <textarea class="form-control" name="product_description" id="description"></textarea>
                             </div>
                             <div id="imageInputs">
                                 <div class="input-group mb-3">

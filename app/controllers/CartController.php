@@ -6,10 +6,17 @@
         $status = [];
         try{        
             $product_id = $_POST['product_id'];
-            SessionModel::addToCart($product_id);
-            $status['status'] = "200";
-            $status['message'] = "Proizvod uspesno dodat u korpu";
-            $status['response'] = count($_SESSION['cart']);
+            $result = SessionModel::addToCart($product_id);
+            if($result == 1){
+                $status['status'] = "200";
+                $status['message'] = "Proizvod uspesno dodat u korpu";
+                $status['response'] = count($_SESSION['cart']);
+            }
+            else{
+                $status['status'] = "500";
+                $status['message'] = "Proizvod nije na stanju i stoga ne moze biti dodat u korpu";
+                $status['response'] = count($_SESSION['cart']);
+            }
         }
         catch(Exception $e){
             $status['status'] = "500";

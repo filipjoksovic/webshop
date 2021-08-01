@@ -12,8 +12,8 @@
 <body>
     <?php require("../components/header.php"); ?>
     <?php require("../components/message.php"); ?>
+    <div id="alertPlaceholder"></div>
     <?php
-
     require("../models/ProductModel.php");
     require "../models/ProductImageModel.php";
     require "../models/UserModel.php";
@@ -33,9 +33,15 @@
             <span class="cart-price">Ukupna cena svih proizvoda u korpi: <?php echo $price . '.00 rsd'; ?></span>
             <div class="cart-actions">
                 <?php if (count($in_cart) > 0) : ?>
-                    <div class="cart-action text-center shadow-custom">
-                        <span><i class="fas fa-shopping-cart action-icon"></i><br>Nastavi na placanje</span>
-                    </div>
+                    <?php if (isset($_SESSION['user']['uid'])) : ?>
+                        <div class="cart-action text-center shadow-custom" onclick="location.href = './checkout.php'">
+                            <span><i class="fas fa-shopping-cart action-icon"></i><br>Nastavi na placanje</span>
+                        </div>
+                    <?php else : ?>
+                        <div class="cart-action text-center shadow-custom" onclick="location.href = './login.php'">
+                            <span><i class="fas fa-user action-icon"></i><br>Ulogujste se kako biste nastavili na placanje</span>
+                        </div>
+                    <?php endif; ?>
                     <div class="cart-action text-center shadow-custom border-animate-danger" onclick="emptyCart()">
                         <span><i class="fas fa-times action-icon"></i><br>Isprazni korpu</span>
                     </div>

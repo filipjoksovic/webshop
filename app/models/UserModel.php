@@ -18,11 +18,14 @@ class UserModel{
     }
     function save(){
         require "../controllers/DatabaseController.php";
-        $query = "INSERT INTO users(username,first_name,last_name,email,password) VALUES('{$this->username}','{$this->first_name}','{$this->last_name}','{$this->email}','{$this->password}')";
+        $query = "INSERT INTO users(username,first_name,last_name,email,password,role) VALUES('{$this->username}','{$this->first_name}','{$this->last_name}','{$this->email}','{$this->password}','{$this->role}')";
         if($database->query($query) === TRUE){
             return $database->insert_id;
         }
-        return -1;
+        else{
+            return -1;
+            // return $database->error;
+        }
     }
     static function doesExist($username)
     {

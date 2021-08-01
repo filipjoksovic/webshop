@@ -49,8 +49,8 @@
         function save(){
             require "../controllers/DatabaseController.php";
             require_once "../controllers/SessionController.php";
-            $query = "INSERT INTO products(product_name,owner_id,category_id,price,stock) 
-                      VALUES ('{$this->product_name}',{$this->owner_id},{$this->category_id},{$this->price},{$this->stock})";
+            $query = "INSERT INTO products(product_name,owner_id,category_id,price,stock,product_description) 
+                      VALUES ('{$this->product_name}',{$this->owner_id},{$this->category_id},{$this->price},{$this->stock},'{$this->product_description}')";
             if($database->query($query) === TRUE){
                 setMessage("Uspesno dodat proizvod u bazu podataka",200);
                 $this->id =  $database->insert_id;
@@ -60,6 +60,17 @@
                 setMessage($database->error,500);
             }
             // header("location: ../public/seller.php");
+        }
+        function update(){
+            require "../controllers/DatabaseController.php";
+            
+            $query = "UPDATE products SET product_name = '{$this->product_name}', category_id = '{$this->category_id}', product_description = '{$this->product_description}',price = {$this->price},stock = {$this->stock}, updated_at = CURRENT_TIMESTAMP() WHERE id = {$this->id}";
+            if($database->query($query) === TRUE){
+                return 1;
+            }
+            else{
+                return $database->error;
+            }
         }
         static function getAllProducts(){
             require "../controllers/DatabaseController.php";
@@ -71,51 +82,93 @@
 
             $results = $database->query($query);
             while($row = $results->fetch_assoc()){
-                var_dump($row);
+                // var_dump($row);
                 $product = new ProductModel($row);
                 $product->main_image = ProductImageModel::getMainImage($product->id);
                 array_push($products,$product);
             }
             return $products;
         }
+        static function getProductsFromSeller($seller_id)
+        {
+            require "../controllers/DatabaseController.php";
+            require "../models/ProductImageModel.php";
+
+            $query = "SELECT * FROM products WHERE owner_id = {$seller_id}";
+
+            $products = [];
+
+            $results = $database->query($query);
+            while ($row = $results->fetch_assoc()) {
+                // var_dump($row);
+                $product = new ProductModel($row);
+                $product->main_image = ProductImageModel::getMainImage($product->id);
+                array_push($products, $product);
+            }
+            return $products;
+        }
         static function deleteProduct($product_id){
             require "../controllers/DatabaseController.php";
 
-            $query = "DELETE * from products WHERE id = {$product_id}";
+            $query = "DELETE from products WHERE id = {$product_id}";
 
-            if($database->query($query) === TRUE){
-                return 1;
-            }
-            else{
-                return -1;
-            }
+                if($database->query($query) === TRUE){
+                    return 1;
+                }
+                else{
+                    return $database->error;
+                }
         }
         static function getProductDetails($pid){
             require "../controllers/DatabaseController.php";
-            require "../models/CategoryModel.php";
             $query = "SELECT * FROM products WHERE id = {$pid} LIMIT 1";
             try{
                 $product = new ProductModel($database->query($query)->fetch_assoc());
-                $product->category_title = CategoryModel::getCategoryTitle($product->category_id);
+                // $product->category_title = CategoryModel::getCategoryTitle($product->category_id);
                 return $product;
             }
             catch(Exception $e){
-                return -1;
+                return $database->error;
             }
         }
         static function getProductDetailsFromArray($ordered_cart){
             require "../controllers/DatabaseController.php";
             $products = [];
-            // foreach($product_ids as $product_id){
-            //     $product = ProductModel::getProductDetails($product_id);
-            //     array_push($products,$product);                
-            // }
             foreach($ordered_cart as $key=>$value){
+                
                 $product = ProductModel::getProductDetails($key);
-                $product->cart_quantity = $value['quantity'];
+                $product->cart_quantity = $value;
                 array_push($products,$product);                
             }
             return $products;
+        }
+        static function increaseStock($product_id){
+            $product = ProductModel::getProductDetails($product_id);
+            $product->stock++;
+            $result = $product->update();
+            return $result;
+        }
+        static function decreaseStock($product_id){
+            $product = ProductModel::getProductDetails($product_id);
+            $product->stock--;
+            $result = $product->update();
+            return $result;
+        }   
+        static function getProductStock($product_id){
+            // return 1;
+            $product = ProductModel::getProductDetails($product_id);
+            return $product->stock;
+        }
+        static function getFromId($product_id){
+            require "../controllers/DatabaseController.php";
+            // try{
+                $query = "SELECT * from products WHERE id = {$product_id} LIMIT 1";
+                $product = new ProductModel($database->query($query)->fetch_assoc());
+                return $product;
+            // }
+            // catch(Exception $e){
+                // return $database->error;
+            // }
         }
     }
 ?>

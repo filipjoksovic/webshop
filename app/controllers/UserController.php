@@ -41,9 +41,9 @@
         $user_data['role'] = $_POST['role'];
         $userModelInstance = new UserModel($user_data);
         $exists = UserModel::doesExist($userModelInstance->username);
-        
         if(!$exists){
             $user_id = $userModelInstance->save();
+
             if($user_id == -1){
                 setMessage("Doslo je do greske prilikom kreiranja naloga.",500);
                 header("location:../index.php");

@@ -3,7 +3,6 @@
     require "../controllers/SessionController.php";
     require "../models/ProductModel.php";
     require "../models/ProductImageModel.php";
-
     if(isset($_POST['add_product'])){
         if($_SESSION['user']['role'] != 'seller'){
             setMessage("Nije vam dozvoljeno dodavanje proizvoda ukoliko niste prodavac",500);
@@ -16,6 +15,8 @@
             $product_data['category_id'] = $_POST['category'];
             $product_data['price'] = $_POST['price'];
             $product_data['stock'] = $_POST['stock'];
+            $product_data['product_description'] = $_POST['product_description'];
+
             $productModelInstance = new ProductModel($product_data);
             $productModelInstance->validateData($product_data);
             // var_dump($_POST);
@@ -42,22 +43,24 @@
             setMessage("Uspesno dodavanje proizvoda",200);
             header("location:../public/seller.php");
         }
-        if(isset($_POST['delete_product'])){
-            $product_id = $_POST['product_id'];
-            try{
-                $delete_res = ProductModel::deleteProduct($product_id);
-                $status['status'] = 200;
-                $status['message'] = "Proizvod je uspesno izbrisan iz baze podataka";
-            }
-            catch(Exception $e){
-                $status['status'] = 500;
-                $status['message'] = "Doslo je do greske prilikom uklanjanja proizvoda iz baze podataka.";
-            }
-            finally{
-                echo json_encode($status);
-            }
-        }
-
+        
     }
+    if (isset($_POST['delete_product'])) {
+        $product_id = $_POST['product_id'];
+        // echo 'here';
+        try{
+            $delete_res = ProductModel::deleteProduct($product_id);
+            $status['status'] = 200;
+            $status['message'] = "Uspesno uklanjanje proizvoda iz baze podataka";
+        }
+        catch(Exception $e){
+            $status['status'] = 500;
+            $status['message'] = "Doslo je do greske prilikom uklanjanja proizvoda iz baze podataka.";
+        }
+        finally{
+            echo json_encode($status);
+        }
+    }
+
 
 ?>
