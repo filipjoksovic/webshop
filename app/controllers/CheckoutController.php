@@ -3,6 +3,7 @@
     require "../models/ShippingProfileModel.php";
     require "../models/CheckoutModel.php";
     require "../models/ProductModel.php";
+    require "../models/SessionModel.php";
     if(isset($_POST['proceed_checkout'])){
         $cart = $_SESSION['ordered_cart'];
         $profile_data['ref_no'] = uniqid();
@@ -55,6 +56,7 @@
                 }
             }
         }
+        SessionModel::emptyCart();
         setMessage("Uspesno kreiranje porudzbine.",200);
         header("location:../public/home.php");
         return;

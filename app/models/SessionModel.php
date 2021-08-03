@@ -48,5 +48,9 @@
         static function emptyCart(){
             $_SESSION['cart'] = [];
         }
+        static function getUserId(){
+            // require "../controllers/SessionController.php";
+            return $_SESSION['user']['uid'];
+        }
     }
 ?>

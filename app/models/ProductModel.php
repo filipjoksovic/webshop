@@ -170,5 +170,17 @@
                 // return $database->error;
             // }
         }
+        function checkIfReviewable(){
+            require "../controllers/DatabaseController.php";
+            require_once "../controllers/SessionController.php";
+            $query = "SELECT checkout.processed FROM checkout INNER JOIN products on products.id = checkout.product_id WHERE checkout.processed = 1 AND checkout.product_id = {$this->id} AND checkout.profile_id = {$_SESSION['user']['uid']}";
+            $results = $database->query($query);
+            if($results->num_rows > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

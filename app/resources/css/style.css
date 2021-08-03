@@ -707,6 +707,49 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: .5fr .5fr 1fr;
 }
+.product-reviews{
+    grid-area: product-reviews;
+}
+.product-reviews > .product-review{
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 1rem 2rem;
+}
+.product-review > .review-header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.review-header > .user-info{
+    display: flex;
+    flex: 0.5;
+    font-size: larger;
+    /* padding : 1rem; */
+    align-items: center;
+}
+.review-header>.user-info > .user-avatar {
+    margin: 0 1rem;
+    color: var(--primary);
+    font-size: x-large;
+}
+
+.review-header > .product-rate{
+    flex: 1;
+    text-align: end;
+    color: #d65959;
+}
+.product-review>.review-comment {
+    padding: 1rem 0;
+    margin: 0 1rem;
+    font-size: x-large;
+}
+.product-review > .review-footer{
+    text-align: end;
+    font-size: small;
+    color: #76797c;
+}
+
 
 .product-showcase>.product-images {
     grid-area: product-image;

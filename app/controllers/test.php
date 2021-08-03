@@ -7,6 +7,5 @@
 
 // require "../controllers/DatabaseController.php";
 // require "../models/ProductModel.php";
-    var_dump(CheckoutModel::deleteCheckouts('6106ce7709d9b'));
-
+    var_dump(ProductModel::checkIfReviewable(1));
 ?>
