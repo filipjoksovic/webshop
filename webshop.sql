@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 30, 2021 at 12:06 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Host: localhost
+-- Generation Time: Aug 03, 2021 at 07:20 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,6 +48,24 @@ INSERT INTO `categories` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `checkout`
+--
+
+CREATE TABLE `checkout` (
+  `id` int(11) NOT NULL,
+  `ref_no` varchar(50) NOT NULL,
+  `profile_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `payment` int(11) DEFAULT 0,
+  `processed` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -68,8 +86,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_description`, `category_id`, `price`, `stock`, `created_at`, `updated_at`, `owner_id`) VALUES
-(1, 'Haljina Trendyol', NULL, 2, 4500, 3, '2021-07-28 23:38:39', '2021-07-28 23:38:39', 3),
-(2, 'Logitech MX Master 2S', 'MX Master 3 is a wireless mouse that works via Bluetooth or the wireless USB receiver. The cable is for charging purposes only. The advanced wireless mouse can be comfortably used while being charged.', 4, 10999, 3, '2021-07-28 23:39:10', '2021-07-28 23:39:10', 3);
+(1, 'Haljina Trendyol', '', 2, 4500, 3, '2021-07-28 23:38:39', '2021-07-31 18:28:03', 3),
+(2, 'Logitech MX Master 2S', 'MX Master 3 is a wireless mouse that works via Bluetooth or the wireless USB receiver. The cable is for charging purposes only. The advanced wireless mouse can be comfortably used while being charged.', 4, 10999, 6, '2021-07-28 23:39:10', '2021-08-01 21:27:54', 3),
+(3, 'Huawei P40 Pro', 'Izrazite se kroz fotografije i video zapise koristeći četvorostruku Ultra Vision Leica kameru kad god i gde god želite. Radikalno promenite svoj doživljaj brzine i snage uz vrhunski Kirin 990 5G čipset. Inovativni dizajn nadograđuje vizuelnu zabavu i ergonomsku udobnost. Istražujte sada i ubuduće koristeći HUAWEI P40 Pro.', 3, 120000, 4, '2021-07-31 14:28:11', '2021-08-01 21:27:54', 4);
 
 -- --------------------------------------------------------
 
@@ -89,14 +108,55 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `product_id`, `path`, `created_at`) VALUES
-(1, 9, '../resources/product_images/info.png', '2021-07-28 23:28:56'),
-(2, 12, '../resources/product_images/tv.png', '2021-07-28 23:32:06'),
 (3, 1, '../resources/product_images/11-48-a9e646ea3_org_zoom.webp', '2021-07-28 23:38:40'),
 (4, 1, '../resources/product_images/11-b1-1826bed62_org_zoom.webp', '2021-07-28 23:38:40'),
 (5, 1, '../resources/product_images/11-d0-35739d721_org_zoom.webp', '2021-07-28 23:38:40'),
 (6, 2, '../resources/product_images/128157_5f2168ed2718d.jpg', '2021-07-28 23:39:10'),
 (7, 2, '../resources/product_images/6816904-1.jpg', '2021-07-28 23:39:10'),
-(8, 2, '../resources/product_images/6816904-2.jpg', '2021-07-28 23:39:10');
+(8, 2, '../resources/product_images/6816904-2.jpg', '2021-07-28 23:39:10'),
+(9, 3, '../resources/product_images/download.jpeg', '2021-07-31 14:28:11'),
+(10, 3, '../resources/product_images/download (2).jpeg', '2021-07-31 14:28:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_reviews`
+--
+
+CREATE TABLE `product_reviews` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `review` varchar(500) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT curtime()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_profiles`
+--
+
+CREATE TABLE `shipping_profiles` (
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `zip_code` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shipping_profiles`
+--
+
+INSERT INTO `shipping_profiles` (`user_id`, `first_name`, `last_name`, `address`, `city`, `zip_code`, `country`, `created_at`, `updated_at`) VALUES
+(2, 'Filip', 'Joksovic', 'Save Kovacevica', 'Kragujevac', '32210', 'Serbia', '2021-07-31 22:35:47', '2021-07-31 22:35:47');
 
 -- --------------------------------------------------------
 
@@ -120,7 +180,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `password`, `role`) VALUES
 (2, 'filipjoksovic', 'Filip', 'Joksovic', 'filipjoksovic1@gmail.com', '298e179ce769af5d1afe9d2828d1c1ce', 'buyer'),
-(3, 'testprodavac', 'Test', 'Prodavac', 'test@prodavac.com', '37617a6eb1a4499e159513275a7dc9b5', 'seller');
+(3, 'testprodavac', 'Test', 'Prodavac', 'test@prodavac.com', '37617a6eb1a4499e159513275a7dc9b5', 'seller'),
+(4, 'milanprodavac', 'Milan', 'Prodavac', 'milan@prodavac.com', 'e4c11334aa004c74ecf81312b4cd6e12', 'seller');
 
 --
 -- Indexes for dumped tables
@@ -131,6 +192,14 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `pass
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `checkout`
+--
+ALTER TABLE `checkout`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profile_id` (`profile_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `products`
@@ -146,6 +215,20 @@ ALTER TABLE `products`
 ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `shipping_profiles`
+--
+ALTER TABLE `shipping_profiles`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -164,26 +247,45 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `checkout`
+--
+ALTER TABLE `checkout`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `checkout`
+--
+ALTER TABLE `checkout`
+  ADD CONSTRAINT `checkout_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `shipping_profiles` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `checkout_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`
@@ -199,6 +301,19 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_images`
   ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `shipping_profiles`
+--
+ALTER TABLE `shipping_profiles`
+  ADD CONSTRAINT `shipping_profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
