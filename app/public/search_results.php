@@ -5,24 +5,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pocetna</title>
+    <title>Rezultati pretrage</title>
     <?php include("../components/bootstrap.php"); ?>
 </head>
 
 <body>
     <?php include("../components/header.php"); ?>
-    <?php include("../components/search.php"); ?>
     <?php include("../components/message.php"); ?>
+    <?php include("../models/ProductModel.php"); ?>
+    <?php include("../models/ProductImageModel.php"); ?>
+    <?php include("../models/CategoryModel.php"); ?>
+    <?php require "../models/UserModel.php"; ?>
+    <?php
+    $search_text = $_GET['search_text'];
+    $products = ProductModel::getSearchProducts($search_text);
+    foreach ($products as $product) {
+        $product->main_image = ProductImageModel::getMainImage($product->id);
+        $product->category_title = CategoryModel::getCategoryTitle($product->category_id);
+    }
+    ?>
+    <?php include("../components/search.php"); ?>
     <div id="alertPlaceholder"></div>
     <div class="container">
         <div class="container mt-5">
-            <h3 class="text-center">Pregled proizvoda</h3>
-            <?php require "../models/ProductModel.php";
-            require "../models/UserModel.php";
-            require "../models/CategoryModel.php";
+            <h3 class="text-center">Rezultati za pretragu "<?php echo $_GET['search_text']; ?>"</h3>
+            <div class="container text-center">
+                <h5>Sortiraj po:</h5>
+                <div class="sort-options">
+                    <div class="sort-option product-action border-animate-primary">
+                        <i class="fas fa-dollar-sign"></i>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="action-text">Ceni opadajuce</div>
+                    </div>
+                    <div class="sort-option product-action border-animate-danger">
+                        <i class="fas fa-dollar-sign"></i>
+                        <i class="fas fa-chevron-up"></i>
+                        <div class="action-text">Ceni rastuce</div>
 
-            $products = ProductModel::getAllProducts();
-            ?>
+                    </div>
+
+                </div>
+            </div>
             <div class="user products-container">
                 <?php foreach ($products as $product) : ?>
                     <div class="user product shadow-custom">
@@ -64,7 +87,6 @@
             </div>
         </div>
     </div>
-    <script src="../resources/js/home.js"></script>
 </body>
 
 </html>

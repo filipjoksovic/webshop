@@ -11,24 +11,24 @@
 
 <body>
     <?php include("../components/header.php"); ?>
-    <?php include("../components/message.php");?>
+    <?php include("../components/message.php"); ?>
     <div class="container mt-5">
         <h1 class="text-center">Prijavite se na vas nalog</h1>
         <h4 class="text-center">Unesite podatke navedene u formi kako biste se prijavili na vas nalog</h4>
     </div>
     <div class="container mt-5">
-        <form action="../controllers/UserController.php" method="post">
-            <div class="form-group">
-                <label for="username">Korisnicko ime ili email adresa</label>
-                <input type="text" class="form-control" name="username" id="username" aria-describedby="helpId" placeholder="">
+        <form action="../controllers/UserController.php" method="post" class="neumorphic-form">
+            <div class="neumorphic-input-container">
+                <input type="text" class="neumorphic-input" name="username" id="username" required="required" aria-describedby="helpId" placeholder="">
+                <label for="username" class="neumorphic-label">Korisnicko ime ili email adresa</label>
             </div>
             <div class="form-group">
-                <label for="password">Lozinka</label>
-                <input type="password" class="form-control" name="password" id="password" aria-describedby="helpId" placeholder="">
+                <input type="password" class="neumorphic-input" name="password" id="password" required="required" aria-describedby="helpId" placeholder="">
+                <label for="password" class="neumorphic-label">Lozinka</label>
             </div>
             <input type="hidden" name="login">
             <p class="form-text text-muted text-center">
-                Nemate nalog? Registrujte se <a href = "./register.php">ovde</a>.
+                Nemate nalog? Registrujte se <a href="./register.php">ovde</a>.
             </p>
             <button type="submit" class="btn btn-primary btn-block">Uloguj se</button>
         </form>

@@ -8,7 +8,7 @@ function removeFromCart(product_id){
         },
         success:function(response){
             let responseData = JSON.parse(response);
-           let element = `<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            let element = `<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
@@ -41,11 +41,30 @@ function emptyCart(){
         },
         success:function(response){
             let responseData = JSON.parse(response);
-            alert(responseData.message);
-            location.reload();
+            let element = `<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>${responseData.message}</strong> 
+                            </div>`
+            $("#alertPlaceholder").append(element)
+            $("#cartCount").html(0);
+            $(".cart-items").empty()
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
         },
         error:function(response){
-            location.reload();
+            let responseData = JSON.parse(response);
+           let element = `<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>${responseData.message}</strong> 
+                            </div>`
+            $("#alertPlaceholder").append(element)
+            // $("#cartCount").html(responseData.response);
+            setTimeout(location.reload(), 2500);
         }
     })
 }

@@ -39,7 +39,7 @@
                         </div>
                     <?php else : ?>
                         <div class="cart-action text-center shadow-custom" onclick="location.href = './login.php'">
-                            <span><i class="fas fa-user action-icon"></i><br>Ulogujste se kako biste nastavili na placanje</span>
+                            <span><i class="fas fa-user action-icon"></i><br>Ulogujte se kako biste nastavili na placanje</span>
                         </div>
                     <?php endif; ?>
                     <div class="cart-action text-center shadow-custom border-animate-danger" onclick="emptyCart()">

@@ -182,5 +182,18 @@
                 return false;
             }
         }
+        static function getSearchProducts($search_text){
+            require "../controllers/DatabaseController.php";
+
+            $query = "SELECT products.* FROM products INNER JOIN categories on products.category_id = categories.id WHERE products.product_name LIKE '%{$search_text}%' OR categories.title LIKE '%{$search_text}%'";
+
+            $results = $database->query($query);
+            $products = [];
+            while($row = $results->fetch_assoc()){
+                $product = new ProductModel($row);
+                array_push($products,$product);
+            }
+            return $products;
+        }
     }
 ?>

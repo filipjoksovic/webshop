@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 03, 2021 at 07:20 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
+-- Host: 127.0.0.1
+-- Generation Time: Aug 04, 2021 at 07:50 PM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,9 +86,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_description`, `category_id`, `price`, `stock`, `created_at`, `updated_at`, `owner_id`) VALUES
-(1, 'Haljina Trendyol', '', 2, 4500, 3, '2021-07-28 23:38:39', '2021-07-31 18:28:03', 3),
-(2, 'Logitech MX Master 2S', 'MX Master 3 is a wireless mouse that works via Bluetooth or the wireless USB receiver. The cable is for charging purposes only. The advanced wireless mouse can be comfortably used while being charged.', 4, 10999, 6, '2021-07-28 23:39:10', '2021-08-01 21:27:54', 3),
-(3, 'Huawei P40 Pro', 'Izrazite se kroz fotografije i video zapise koristeći četvorostruku Ultra Vision Leica kameru kad god i gde god želite. Radikalno promenite svoj doživljaj brzine i snage uz vrhunski Kirin 990 5G čipset. Inovativni dizajn nadograđuje vizuelnu zabavu i ergonomsku udobnost. Istražujte sada i ubuduće koristeći HUAWEI P40 Pro.', 3, 120000, 4, '2021-07-31 14:28:11', '2021-08-01 21:27:54', 4);
+(1, 'Haljina Trendyol', '', 2, 4500, 3, '2021-07-28 23:38:39', '2021-08-04 18:49:21', 3),
+(2, 'Logitech MX Master 2S', 'MX Master 3 is a wireless mouse that works via Bluetooth or the wireless USB receiver. The cable is for charging purposes only. The advanced wireless mouse can be comfortably used while being charged.', 4, 10999, 6, '2021-07-28 23:39:10', '2021-08-04 18:49:23', 3),
+(3, 'Huawei P40 Pro', 'Izrazite se kroz fotografije i video zapise koristeći četvorostruku Ultra Vision Leica kameru kad god i gde god želite. Radikalno promenite svoj doživljaj brzine i snage uz vrhunski Kirin 990 5G čipset. Inovativni dizajn nadograđuje vizuelnu zabavu i ergonomsku udobnost. Istražujte sada i ubuduće koristeći HUAWEI P40 Pro.', 3, 120000, 4, '2021-07-31 14:28:11', '2021-08-04 18:49:23', 4);
 
 -- --------------------------------------------------------
 
@@ -132,6 +132,13 @@ CREATE TABLE `product_reviews` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT curtime()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_reviews`
+--
+
+INSERT INTO `product_reviews` (`id`, `product_id`, `user_id`, `rate`, `review`, `created_at`, `updated_at`) VALUES
+(4, 2, 2, 5, 'Super mis', '2021-08-03 20:00:18', '2021-08-03 20:10:11');
 
 -- --------------------------------------------------------
 
@@ -182,6 +189,29 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `pass
 (2, 'filipjoksovic', 'Filip', 'Joksovic', 'filipjoksovic1@gmail.com', '298e179ce769af5d1afe9d2828d1c1ce', 'buyer'),
 (3, 'testprodavac', 'Test', 'Prodavac', 'test@prodavac.com', '37617a6eb1a4499e159513275a7dc9b5', 'seller'),
 (4, 'milanprodavac', 'Milan', 'Prodavac', 'milan@prodavac.com', 'e4c11334aa004c74ecf81312b4cd6e12', 'seller');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(6, 2, 1, '2021-08-04 19:25:00', '2021-08-04 19:25:00'),
+(7, 2, 2, '2021-08-04 19:25:06', '2021-08-04 19:25:06'),
+(8, 2, 3, '2021-08-04 19:25:07', '2021-08-04 19:25:07');
 
 --
 -- Indexes for dumped tables
@@ -237,6 +267,14 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -250,7 +288,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -268,13 +306,19 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `product_reviews`
 --
 ALTER TABLE `product_reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -314,6 +358,13 @@ ALTER TABLE `product_reviews`
 --
 ALTER TABLE `shipping_profiles`
   ADD CONSTRAINT `shipping_profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

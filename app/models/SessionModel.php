@@ -52,5 +52,11 @@
             // require "../controllers/SessionController.php";
             return $_SESSION['user']['uid'];
         }
+        static function isLoggedIn(){
+            if(isset($_SESSION['user']['uid'])){
+                return true;
+            }
+            return false;
+        }
     }
 ?>

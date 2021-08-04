@@ -17,14 +17,17 @@
     require "../models/ProductModel.php";
     require "../models/ProductImageModel.php";
     require "../models/ProductReviewModel.php";
+    require "../models/SessionModel.php";
     $product_id = $_GET['product_id'];
     $product = ProductModel::getProductDetails($product_id);
     // $product->id = $product_id;
     $product->main_image = ProductImageModel::getMainImage($product->id);
     $product->images = ProductImageModel::getProductImages($product->id);
-    $reviewable = $product->checkIfReviewable();
-    if ($reviewable) {
-        $review = ProductReviewModel::getReview($product_id, $_SESSION['user']['uid']);
+    if(SessionModel::isLoggedIn()){
+        $reviewable = $product->checkIfReviewable();
+        if ($reviewable) {
+            $review = ProductReviewModel::getReview($product_id, $_SESSION['user']['uid']);
+        }
     }
     $reviews = ProductReviewModel::getAllProductReviews($product_id);
     ?>
@@ -109,7 +112,6 @@
 
             <?php endif; ?>
         </div>
-            </div>
         <div class="product-reviews">
             <?php foreach ($reviews as $review) : ?>
                 <div class="product-review shadow-custom">
