@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moj nalog</title>
     <?php include("../components/bootstrap.php"); ?>
-    <?php include("../controllers/MiddlewareController.php"); ?>
 
 </head>
 
 <body>
     <?php include("../components/header.php"); ?>
     <?php include("../components/message.php"); ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
 
-    <?php include("../models/CheckoutModel.php");
-    require "../models/ProductModel.php";
-    require "../models/ProductImageModel.php";
-    require "../models/ShippingProfileModel.php";
-    require "../models/SessionModel.php";
-    require "../models/WishlistModel.php";
+    <?php require "../models/CheckoutModel.php";
+            require "../models/ProductModel.php";
+            require "../models/ShippingProfileModel.php";
+            require "../models/SessionModel.php";
+            require "../models/WishlistModel.php";
+            require "../models/ProductImageModel.php";
     $checkouts = CheckoutModel::getCustomerOrders($_SESSION['user']['uid']);
     // var_dump($checkouts);
     ?>

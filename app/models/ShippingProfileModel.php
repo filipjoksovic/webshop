@@ -10,13 +10,27 @@
 
         public function __construct($profile_data)
         {   
-            $this->user_id = $profile_data['user_id'];
-            $this->first_name = $profile_data['first_name'];
-            $this->last_name = $profile_data['last_name'];
-            $this->address = $profile_data['address'];
-            $this->city = $profile_data['city'];
-            $this->zip_code = $profile_data['zip_code'];
-            $this->country = $profile_data['country'];
+            if(isset($profile_data['user_id'])){
+                $this->user_id = $profile_data['user_id'];
+            }
+            if (isset($profile_data['first_name'])) {
+                $this->first_name = $profile_data['first_name'];
+            }
+            if (isset($profile_data['last_name'])) {
+                $this->last_name = $profile_data['last_name'];
+            }
+            if (isset($profile_data['address'])) {
+                $this->address = $profile_data['address'];
+            }
+            if (isset($profile_data['city'])) {
+                $this->city = $profile_data['city'];
+            }
+            if (isset($profile_data['zip_code'])) {
+                $this->zip_code = $profile_data['zip_code'];
+            }
+            if (isset($profile_data['country'])) {
+                $this->country = $profile_data['country'];
+            }
         }
         public function save(){
             require "../controllers/DatabaseController.php";
@@ -44,9 +58,14 @@
             require "../controllers/DatabaseController.php";
             // require "../models/UserModel.php";
             $query = "SELECT * from shipping_profiles WHERE user_id = {$user_id} LIMIT 1";
-            $result = $database->query($query)->fetch_assoc();
-            $profile = new ShippingProfileModel($result);
-            return $profile;
+            try{
+                $result = $database->query($query)->fetch_assoc();
+                $profile = new ShippingProfileModel($result);
+                return $profile;
+            }
+            catch(Exception $e){
+                return null;
+            }
         }
         public static function exists($user_id){
             require "../controllers/DatabaseController.php";

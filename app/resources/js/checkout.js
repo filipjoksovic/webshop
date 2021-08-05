@@ -4,12 +4,13 @@ function showCardForm() {
         let input = $(this).val();
         if (input == "" || input == undefined || input == null) {
             passed = false;
-
-
         }
 
     });
     if (passed) {
+        $("#card-form input[type='text']").each(function () {
+            $(this).attr("required","required")
+        });
         $("#card-form").fadeIn();
         $("#option-2").prop('checked', true)
 
@@ -34,6 +35,9 @@ function showCardForm() {
 }
 
 function hideCardForm() {
+    $("#card-form input[type='text']").each(function () {
+            $(this).removeAttr("required","required")
+        });
     $("#card-form").fadeOut();
 
 }

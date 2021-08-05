@@ -22,7 +22,9 @@
             $this->category_id = $product_data['category_id'];
             $this->price = $product_data['price'];
             $this->stock = $product_data['stock'];
-            $this->owner_id = $product_data['owner_id'];
+            if(isset($product_data['owner_id'])){
+                $this->owner_id = $product_data['owner_id'];
+            }
         }
         function validateData($product_data){
             if(!isset($product_data['product_name']) || $product_data['product_name'] == null || $product_data['product_name'] == ""){
@@ -69,7 +71,7 @@
                 return 1;
             }
             else{
-                return $database->error;
+                throw new Exception($database->error);
             }
         }
         static function getAllProducts(){
@@ -86,6 +88,23 @@
                 $product = new ProductModel($row);
                 $product->main_image = ProductImageModel::getMainImage($product->id);
                 array_push($products,$product);
+            }
+            return $products;
+        }
+        static function getSearchProductsSorted($sort){
+            require "../controllers/DatabaseController.php";
+            // require "../models/ProductImageModel.php";
+
+            $query = "SELECT * FROM products ORDER BY price {$sort}";
+
+            $products = [];
+
+            $results = $database->query($query);
+            while ($row = $results->fetch_assoc()) {
+                // var_dump($row);
+                $product = new ProductModel($row);
+                $product->main_image = ProductImageModel::getMainImage($product->id);
+                array_push($products, $product);
             }
             return $products;
         }

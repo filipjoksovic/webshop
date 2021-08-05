@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <?php include("../components/bootstrap.php"); ?>
-    <?php include("../controllers/MiddlewareController.php"); ?>
 </head>
 
 <body>
     <?php include("../components/header.php"); ?>
     <?php include("../controllers/DatabaseController.php"); ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
     <h1 class="text-center mt-5">Pregled korisnika</h1>
 
     <?php
@@ -23,6 +23,7 @@
     <div class="container mt-5">
         <div class="users-container">
             <?php foreach ($users as $user) : ?>
+                <?php if($user->username != "admin"):?>
                 <div class="user shadow-custom">
                     <div class="user-icon shadow-custom">
                         <i class='fas fa-user'></i>
@@ -41,6 +42,7 @@
                         </div>
                     </div>
                 </div>
+                <?php endif;?>
             <?php endforeach; ?>
         </div>
 

@@ -61,6 +61,32 @@
             echo json_encode($status);
         }
     }
+    if(isset($_POST['find_product'])){
+        $product_id = $_POST['product_id'];
+        $product = ProductModel::getFromId($product_id);
+        $status['status'] = 200;
+        $status['message'] = "Proizvod pronadjen";
+        $status['response'] = $product;
+        echo json_encode($status);
+    } 
+    if(isset($_POST['edit_product'])){
+        $product = new ProductModel($_POST);
+        // var_dump($product);
+        // return;
+        $status = [];
+        try{
+            $product->update();
+            $status['status'] = 200;
+            $status['message'] = "Uspesna izmena proizvoda";
+        }
+        catch(Exception $e){
+            $status['status'] = 500;
+            $status['message'] = $e->getMessage();
+        }
+        finally{
+            echo json_encode($status);
+        }
+    }
 
 
 ?>

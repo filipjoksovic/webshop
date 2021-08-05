@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2021 at 07:50 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Generation Time: Aug 05, 2021 at 10:22 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -63,6 +63,21 @@ CREATE TABLE `checkout` (
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `checkout`
+--
+
+INSERT INTO `checkout` (`id`, `ref_no`, `profile_id`, `product_id`, `quantity`, `payment`, `processed`, `created_at`, `updated_at`) VALUES
+(3, '610c3681d1c69', 1, 6, 1, 0, 1, '2021-08-05 21:05:37', '2021-08-05 21:05:37'),
+(6, '610c36f85d9d4', 2, 7, 1, 1, 1, '2021-08-05 21:07:36', '2021-08-05 21:07:36'),
+(7, '610c3dd865691', 1, 1, 1, 1, 1, '2021-08-05 21:36:56', '2021-08-05 21:36:56'),
+(8, '610c3dd865691', 1, 2, 1, 1, 1, '2021-08-05 21:36:56', '2021-08-05 21:36:56'),
+(9, '610c3dd865691', 1, 3, 1, 1, 1, '2021-08-05 21:36:56', '2021-08-05 21:36:56'),
+(13, '610c3e4373a77', 5, 4, 1, 0, 1, '2021-08-05 21:38:43', '2021-08-05 21:38:43'),
+(14, '610c3e4373a77', 5, 5, 1, 0, 1, '2021-08-05 21:38:43', '2021-08-05 21:38:43'),
+(15, '610c3e4373a77', 5, 6, 1, 0, 1, '2021-08-05 21:38:43', '2021-08-05 21:38:43'),
+(16, '610c42ca17abf', 2, 2, 1, 0, 1, '2021-08-05 21:58:02', '2021-08-05 21:58:02');
+
 -- --------------------------------------------------------
 
 --
@@ -86,9 +101,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_description`, `category_id`, `price`, `stock`, `created_at`, `updated_at`, `owner_id`) VALUES
-(1, 'Haljina Trendyol', '', 2, 4500, 3, '2021-07-28 23:38:39', '2021-08-04 18:49:21', 3),
-(2, 'Logitech MX Master 2S', 'MX Master 3 is a wireless mouse that works via Bluetooth or the wireless USB receiver. The cable is for charging purposes only. The advanced wireless mouse can be comfortably used while being charged.', 4, 10999, 6, '2021-07-28 23:39:10', '2021-08-04 18:49:23', 3),
-(3, 'Huawei P40 Pro', 'Izrazite se kroz fotografije i video zapise koristeći četvorostruku Ultra Vision Leica kameru kad god i gde god želite. Radikalno promenite svoj doživljaj brzine i snage uz vrhunski Kirin 990 5G čipset. Inovativni dizajn nadograđuje vizuelnu zabavu i ergonomsku udobnost. Istražujte sada i ubuduće koristeći HUAWEI P40 Pro.', 3, 120000, 4, '2021-07-31 14:28:11', '2021-08-04 18:49:23', 4);
+(1, 'Trendyol Farmerke', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur gravida nulla nec erat laoreet placerat. Maecenas quis dictum arcu, et volutpat nulla. Phasellus imperdiet consequat mi quis mattis. Vestibulum pulvinar lectus turpis, et placerat magna condimentum sit amet. In ipsum nisi, egestas a porttitor at, pharetra id dui. Vivamus quis.', 2, 4500, 0, '2021-08-05 20:40:38', '2021-08-05 21:36:56', 8),
+(2, 'Trendyol Duks', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut quam tortor. Ut in blandit leo. Etiam et tincidunt neque. Fusce placerat pellentesque turpis in maximus. Donec molestie sit amet ligula id sodales. Suspendisse pulvinar eu massa nec condimentum. Maecenas vitae congue est, nec egestas sapien. Pellentesque at fringilla risus.', 2, 3500, 0, '2021-08-05 20:42:34', '2021-08-05 21:58:02', 8),
+(3, 'Trendyol Jakna', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut quam tortor. Ut in blandit leo. Etiam et tincidunt neque. Fusce placerat pellentesque turpis in maximus. Donec molestie sit amet ligula id sodales. Suspendisse pulvinar eu massa nec condimentum. Maecenas vitae congue est, nec egestas sapien. Pellentesque at fringilla risus.', 2, 10000, 0, '2021-08-05 20:43:14', '2021-08-05 21:36:56', 8),
+(4, 'PocoFone F3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut quam tortor. Ut in blandit leo. Etiam et tincidunt neque. Fusce placerat pellentesque turpis in maximus. Donec molestie sit amet ligula id sodales. Suspendisse pulvinar eu massa nec condimentum. Maecenas vitae congue est, nec egestas sapien. Pellentesque at fringilla risus.', 3, 55000, 0, '2021-08-05 20:44:31', '2021-08-05 21:38:43', 9),
+(5, 'S-BOX kabal', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut quam tortor. Ut in blandit leo. Etiam et tincidunt neque. Fusce placerat pellentesque turpis in maximus. Donec molestie sit amet ligula id sodales. Suspendisse pulvinar eu massa nec condimentum. Maecenas vitae congue est, nec egestas sapien. Pellentesque at fringilla risus.', 4, 1200, 2, '2021-08-05 20:44:55', '2021-08-05 21:38:43', 9),
+(6, 'LOGITECH Bežična tastatura K400 PLUS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fermentum volutpat eleifend. In non gravida quam, sed vehicula enim. Aenean a dui sodales, vulputate massa a, dignissim risus. In ac augue a enim maximus scelerisque. Duis nec orci pulvinar, consectetur dui a, commodo neque. Ut laoreet porttitor volutpat. Aenean eleifend.', 4, 6000, 1, '2021-08-05 20:48:00', '2021-08-05 21:38:43', 10),
+(7, 'Radeon Ryzen 7 3700X', '\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at lectus luctus, dapibus velit ut, sagittis arcu. Vestibulum ut turpis egestas, bibendum lorem ut, tempus lorem. Integer feugiat semper odio, vitae sollicitudin ligula. Sed lacinia convallis ligula, accumsan rhoncus magna pellentesque vel. Duis blandit enim at sem semper, a facilisis.', 5, 35000, 3, '2021-08-05 20:48:38', '2021-08-05 21:07:36', 10);
 
 -- --------------------------------------------------------
 
@@ -108,14 +127,19 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `product_id`, `path`, `created_at`) VALUES
-(3, 1, '../resources/product_images/11-48-a9e646ea3_org_zoom.webp', '2021-07-28 23:38:40'),
-(4, 1, '../resources/product_images/11-b1-1826bed62_org_zoom.webp', '2021-07-28 23:38:40'),
-(5, 1, '../resources/product_images/11-d0-35739d721_org_zoom.webp', '2021-07-28 23:38:40'),
-(6, 2, '../resources/product_images/128157_5f2168ed2718d.jpg', '2021-07-28 23:39:10'),
-(7, 2, '../resources/product_images/6816904-1.jpg', '2021-07-28 23:39:10'),
-(8, 2, '../resources/product_images/6816904-2.jpg', '2021-07-28 23:39:10'),
-(9, 3, '../resources/product_images/download.jpeg', '2021-07-31 14:28:11'),
-(10, 3, '../resources/product_images/download (2).jpeg', '2021-07-31 14:28:11');
+(1, 1, '../resources/product_images/13-3a-3cdd361114661_1.webp', '2021-08-05 20:40:38'),
+(2, 1, '../resources/product_images/13-ab-db0705f314661_2.webp', '2021-08-05 20:40:38'),
+(3, 1, '../resources/product_images/13-af-8b85c22b14661_3.webp', '2021-08-05 20:40:38'),
+(4, 2, '../resources/product_images/f56-f6-f551580320210305060640_1210000126023_1.webp', '2021-08-05 20:42:34'),
+(5, 2, '../resources/product_images/ad6-ec-ad40fb5620210305060640_1210000126023_2.webp', '2021-08-05 20:42:34'),
+(6, 3, '../resources/product_images/676-86-67b3413920210212085424_5902228078722.webp', '2021-08-05 20:43:14'),
+(7, 3, '../resources/product_images/a96-1c-a9bf461220210212085424_5902228078722_2.webp', '2021-08-05 20:43:14'),
+(8, 3, '../resources/product_images/f16-96-f153f49920210212085424_5902228078722_1.webp', '2021-08-05 20:43:14'),
+(9, 4, '../resources/product_images/XIAOMI-Poco-F3-256GB-Night-black-(Crna)-75.png', '2021-08-05 20:44:31'),
+(10, 5, '../resources/product_images/image581b49b949b1a.png', '2021-08-05 20:44:55'),
+(11, 6, '../resources/product_images/image57fdfc4ef0245.png', '2021-08-05 20:48:00'),
+(12, 6, '../resources/product_images/image558a7bf543fbf.png', '2021-08-05 20:48:00'),
+(13, 7, '../resources/product_images/image5d66752a42531.png', '2021-08-05 20:48:38');
 
 -- --------------------------------------------------------
 
@@ -138,7 +162,12 @@ CREATE TABLE `product_reviews` (
 --
 
 INSERT INTO `product_reviews` (`id`, `product_id`, `user_id`, `rate`, `review`, `created_at`, `updated_at`) VALUES
-(4, 2, 2, 5, 'Super mis', '2021-08-03 20:00:18', '2021-08-03 20:10:11');
+(1, 1, 1, 5, 'Odlican', '2021-08-05 21:41:52', '2021-08-05 21:51:06'),
+(2, 2, 1, 2, 'Srednje zalosno', '2021-08-05 21:47:24', '2021-08-05 21:51:59'),
+(3, 3, 1, 5, 'Savrsena zimska jakna', '2021-08-05 21:52:15', '2021-08-05 21:52:15'),
+(4, 6, 1, 5, 'Odlicna tastatura za TV', '2021-08-05 21:52:39', '2021-08-05 21:52:39'),
+(5, 7, 2, 5, 'Savrsen procesor za moje potrebe', '2021-08-05 21:54:14', '2021-08-05 21:54:14'),
+(6, 2, 2, 5, 'Dobar kvalitet', '2021-08-05 21:58:31', '2021-08-05 21:58:31');
 
 -- --------------------------------------------------------
 
@@ -163,7 +192,9 @@ CREATE TABLE `shipping_profiles` (
 --
 
 INSERT INTO `shipping_profiles` (`user_id`, `first_name`, `last_name`, `address`, `city`, `zip_code`, `country`, `created_at`, `updated_at`) VALUES
-(2, 'Filip', 'Joksovic', 'Save Kovacevica', 'Kragujevac', '32210', 'Serbia', '2021-07-31 22:35:47', '2021-07-31 22:35:47');
+(1, 'Test', 'Test', 'Test`', 'Test', '32210', 'Test', '2021-08-05 21:04:16', '2021-08-05 21:04:16'),
+(2, 'Tester', '2', 'Test', 'Test', '35410', 'Test', '2021-08-05 21:06:32', '2021-08-05 21:06:32'),
+(5, 'Test', '5', 'Test 5', 'Test5', '89100', 'Test', '2021-08-05 21:37:46', '2021-08-05 21:37:46');
 
 -- --------------------------------------------------------
 
@@ -178,17 +209,25 @@ CREATE TABLE `users` (
   `last_name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(20) NOT NULL
+  `role` varchar(20) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `password`, `role`) VALUES
-(2, 'filipjoksovic', 'Filip', 'Joksovic', 'filipjoksovic1@gmail.com', '298e179ce769af5d1afe9d2828d1c1ce', 'buyer'),
-(3, 'testprodavac', 'Test', 'Prodavac', 'test@prodavac.com', '37617a6eb1a4499e159513275a7dc9b5', 'seller'),
-(4, 'milanprodavac', 'Milan', 'Prodavac', 'milan@prodavac.com', 'e4c11334aa004c74ecf81312b4cd6e12', 'seller');
+INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'test1', 'Test', '1', 'test@1.com', '5a105e8b9d40e1329780d62ea2265d8a', 'buyer', '2021-08-05 20:21:18', '2021-08-05 20:21:18'),
+(2, 'test2', 'Test', '2', 'test@2.com', 'ad0234829205b9033196ba818f7a872b', 'buyer', '2021-08-05 20:21:42', '2021-08-05 20:21:42'),
+(3, 'test3', 'Test', '3', 'test@3.com', '8ad8757baa8564dc136c1e07507f4a98', 'buyer', '2021-08-05 20:22:03', '2021-08-05 20:22:03'),
+(4, 'test4', 'Test', '4', 'test@4.com', 'e3d704f3542b44a621ebed70dc0efe13', 'buyer', '2021-08-05 20:22:25', '2021-08-05 20:22:25'),
+(5, 'test5', 'Test', '5', 'test@5.com', 'e3d704f3542b44a621ebed70dc0efe13', 'buyer', '2021-08-05 20:22:47', '2021-08-05 20:22:47'),
+(8, 'tp1', 'TP', '1', '1@prodavac.com', '35a448b5c9018c4b93cd8dbe8502d060', 'seller', '2021-08-05 20:27:34', '2021-08-05 20:27:34'),
+(9, 'tp2', 'TP', '2', '2@prodavac.com', '98d648825b692edb5772da0b209b82a3', 'seller', '2021-08-05 20:28:18', '2021-08-05 20:28:18'),
+(10, 'tp3', 'TP', '3', '3@prodavac.com', '32efe2815eb7c9abd9e6978b427e680f', 'seller', '2021-08-05 20:28:39', '2021-08-05 20:28:39'),
+(11, 'admin', 'Admin', 'Main', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'admin', '2021-08-05 20:29:06', '2021-08-05 20:29:06');
 
 -- --------------------------------------------------------
 
@@ -209,9 +248,9 @@ CREATE TABLE `wishlist` (
 --
 
 INSERT INTO `wishlist` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(6, 2, 1, '2021-08-04 19:25:00', '2021-08-04 19:25:00'),
-(7, 2, 2, '2021-08-04 19:25:06', '2021-08-04 19:25:06'),
-(8, 2, 3, '2021-08-04 19:25:07', '2021-08-04 19:25:07');
+(1, 1, 1, '2021-08-05 22:03:41', '2021-08-05 22:03:41'),
+(2, 1, 2, '2021-08-05 22:03:43', '2021-08-05 22:03:43'),
+(3, 1, 4, '2021-08-05 22:04:32', '2021-08-05 22:04:32');
 
 --
 -- Indexes for dumped tables
@@ -288,37 +327,37 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `product_reviews`
 --
 ALTER TABLE `product_reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

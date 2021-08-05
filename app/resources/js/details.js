@@ -30,3 +30,8 @@ function addToCart(product_id) {
         }
     })
 }
+function setActive(){
+    let img = $(event.target).attr("src");
+    console.log(img);
+    $("#mainImage").attr("src",img);
+}
