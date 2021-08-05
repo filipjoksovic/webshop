@@ -20,7 +20,8 @@ $(document).ready(function () {
     })
 })
 $("#addImage").click(function () {
-    let inputs = $(".custom-file")
+    let inputs = $(".image-input")
+    console.log(inputs.length)
     if (inputs.length >= 5) {
         alert("Dozvoljeno je maksimalno 5 slika po proizvodu")
         return;
@@ -28,13 +29,11 @@ $("#addImage").click(function () {
     let inputIndex = inputs.length + 1
     console.log(inputIndex)
     let element = `
-        <div class="input-group mb-3">
-            <div class="custom-file cf-${inputIndex}">
-                <input type="file" class="custom-file-input" name = "product_images[]" accept = "image/png, image/gif, image/jpeg, image/webp" id="productImage" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="productImage">Odaberi sliku</label>
-            </div>
+        <div class = "image-input m-1">
+        <input onchange = "changeFileLabel()" id = "image-input-${inputIndex}" class="d-none finput" required="required" type="file" name="product_images[]" id="productImage" accept="image/png, image/gif, image/jpeg, image/webp" aria-describedby="inputGroupFileAddon01">
+                            <label class="neumorphic-file-label" for="image-input-${inputIndex}">Odaberi sliku</label>
         </div>
-    `
+                            `
     $("#imageInputs").append(element)
 })
 
@@ -50,7 +49,7 @@ function confirmDelete() {
         type: "POST",
         data: {
             'product_id': deleteID,
-            'delete_product':1
+            'delete_product': 1
         },
         success: function (response) {
             let responseData = JSON.parse(response);
@@ -81,4 +80,9 @@ function confirmDelete() {
             }, 2500);
         }
     })
+}
+function changeFileLabel(){
+    console.log(event.target.id)
+    let label = $("label[for='"+event.target.id+"'")
+    $(label).text($(event.target).val().replace(/C:\\fakepath\\/i, ''))
 }

@@ -73,44 +73,41 @@
     }
     if(isset($_GET['find_user'])){
         $user_id = $_GET['user_id'];
-        $query = "SELECT * FROM users WHERE user_id = {$user_id}";
-        $user = $database->query($query);
-        if($user->num_rows == 0){
-            $response['status']['status'] = 500;
-            $response['status']['message'] = "Trazeni korisnik ne postoji u bazi podataka";
-            $response['user']['uid'] = null;
-            $response['user']['username'] = null;
-            $response['user']['first_name'] = null;
-            $response['user']['last_name'] = null;
-            $response['user']['email'] = null;
+        $status = [];
+        // echo $user_id;
+        // return;
+        try{
+            $user = UserModel::getUser($user_id);
+            $status['status'] = 200;
+            $status['message'] = "Korisnik je pronadjen";
+            $status['response'] = $user;
         }
-        else{
-            $user = $user->fetch_assoc();
-            $response['status']['status'] = 200;
-            $response['status']['message'] = "Trazeni korisnik je pronadjen u bazi podataka";
-            $response['user']['uid'] = $user['user_id'];
-            $response['user']['username'] = $user['username'];
-            $response['user']['first_name'] = $user['first_name'];
-            $response['user']['last_name'] = $user['last_name'];
-            $response['user']['email'] = $user['email'];
+        catch(Exception $e){
+            $status['status'] = 200;
+            $status['message'] = "Korisnik nije pronadjen";
+            $status['response'] = $e->getMessage();    
         }
-       
-        echo json_encode($response);
+        finally{
+            echo json_encode($status);
+        }
     }
     if(isset($_POST['edit_user'])){
         $response = [];
+        $user_id = $_POST['id'];
         $username = $_POST['username'];
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $email = $_POST['email'];
-        $user_id = $_POST['user_id'];
+        $_POST['password'] = md5($_POST['password']);
         if($username == "" || $first_name == "" || $last_name == "" || $email == ""){
             $response['status']['status'] = 500;
             $response['status']['message'] = "Nisu popunjeni svi podaci. Popunite podatke i pokusajte ponovo";
             echo json_encode($response);
             return;
         }
-        $userExists = UserModel::doesExist($username);
+        $userExists = false;
+
+        // $userExists = UserModel::doesExist($username);
         if($userExists){
             $response['status']['status'] = 500;
             $response['status']['message'] = "Korisnik sa ovim korisnickim imenom ili email adresom vec postoji";
@@ -119,15 +116,15 @@
         }
         else{
             try{
-                $query = "UPDATE users SET username = '{$username}', first_name = '{$first_name}', last_name = '{$last_name}', email = '{$email}' WHERE user_id = {$user_id}";
-                $database->query($query);
+                $user = new UserModel($_POST);
+                $res = $user->update();
                 $response['status']['status'] = 200;
                 $response['status']['message'] = "Korisnik je uspesno izmenjen";
                 echo json_encode($response);
                 return;
             }
             catch(Exception){
-                echo $database->error;
+                // echo $database->error;
                 $response['status']['status'] = 500;
                 $response['status']['message'] = $database->error;
                 json_encode($response);

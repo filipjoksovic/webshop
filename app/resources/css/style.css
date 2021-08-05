@@ -37,7 +37,13 @@
         inset -10px -10px 20px #ffffbf;
 
 }
-
+.bg-default{
+    background-color: var(--background) !important;
+}
+.br-2{
+    border-radius: 2rem !important;
+    border: none;
+}
 .shadow-custom {
     box-shadow: var(--neumorphic-default);
     background-color: var(--background);
@@ -50,7 +56,7 @@
 
 .border-animate-warning {
     border-radius: 1rem;
-    transition: border-radius 250ms ease-in-out, background-color 250ms ease-in-out;
+    transition: all 250ms ease-in-out;
 }
 
 .border-animate-warning:hover {
@@ -110,7 +116,7 @@
     box-shadow: var(--neumorphic-default);
     color: #BCC0C4;
     border-radius: 1rem;
-    transition: box-shadow 250ms ease-in-out, color 250ms ease-in-out;
+    transition: all 250ms ease-in-out;
 }
 
 .neumorphic-button:hover {
@@ -133,6 +139,19 @@
     top: 50%;
     transform: translateY(-50%);
     display: block;
+}
+.neumorphic-file-label{
+    width: 100%;
+    padding: 1rem;
+    background: var(--background);
+    margin: 1.5rem 0;
+    border: none;
+    color: #202020;
+    font-size: 1.125rem;
+    box-shadow: var(--neumorphic-default);
+    border-radius: 2rem;
+    transition: box-shadow 250ms ease-in-out,
+    border-radius 250ms ease-in-out;
 }
 
 .neumorphic-form .neumorphic-input {
@@ -390,15 +409,8 @@ body {
 }
 
 .users-container>.user {
-    background-color: white;
-    border: 2px solid #e7e7e7;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
-        0 2px 4px rgba(0, 0, 0, 0.07),
-        0 4px 8px rgba(0, 0, 0, 0.07),
-        0 8px 16px rgba(0, 0, 0, 0.07),
-        0 16px 32px rgba(0, 0, 0, 0.07),
-        0 32px 64px rgba(0, 0, 0, 0.07);
-    border-radius: 1rem;
+   
+    border-radius: 2rem;
     margin: 1rem;
     padding: 1rem;
     display: flex;
@@ -408,22 +420,17 @@ body {
 }
 
 .user>.user-icon {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07),
-        0 2px 4px rgba(0, 0, 0, 0.07),
-        0 4px 8px rgba(0, 0, 0, 0.07),
-        0 8px 16px rgba(0, 0, 0, 0.07),
-        0 16px 32px rgba(0, 0, 0, 0.07),
-        0 32px 64px rgba(0, 0, 0, 0.07);
     border-radius: 100%;
     padding: 2rem;
     flex: .5;
+    aspect-ratio: 1/1;
 }
 
-.user>.user-icon>img {
-    filter: invert(55%) sepia(63%) saturate(4473%) hue-rotate(2deg) brightness(109%) contrast(98%);
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
+.user>.user-icon>i {
+    font-size: xx-large;
+    text-align: center;
+    display: block;
+    /* object-fit: contain; */
 }
 
 .user>.user-info {
@@ -431,6 +438,16 @@ body {
     text-align: center;
     padding: 1rem;
     margin-top: 1rem;
+}
+.user > .user-actions{
+    display: flex;
+    justify-content: space-around;
+}
+.user-actions > .delete-user{
+    flex: .4;
+}
+.user-actions>.edit-user {
+    flex: .4;
 }
 
 .products-container {

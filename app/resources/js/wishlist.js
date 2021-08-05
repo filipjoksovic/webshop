@@ -7,6 +7,7 @@ function addToWishlist(product_id) {
             'add_to_wishlist': 1
         },
         success: function (response) {
+            console.log(response);
             let responseData = JSON.parse(response);
             let aclass = (responseData.status == 200) ? "success" : "danger";
             let element = `<div class="alert alert-${aclass} alert-dismissible text-center fade show" role="alert">
@@ -19,6 +20,8 @@ function addToWishlist(product_id) {
             $("#alertPlaceholder").append(element);
         },
         error: function(response){
+            console.log(response);
+
             let responseData = JSON.parse(response);
             let element = `<div class="alert alert-danger alert-dismissible text-center fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

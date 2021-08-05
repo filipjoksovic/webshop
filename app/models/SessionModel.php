@@ -50,7 +50,10 @@
         }
         static function getUserId(){
             // require "../controllers/SessionController.php";
-            return $_SESSION['user']['uid'];
+            if(isset($_SESSION['user']['uid'])){
+                return $_SESSION['user']['uid'];
+            }
+            return null;
         }
         static function isLoggedIn(){
             if(isset($_SESSION['user']['uid'])){

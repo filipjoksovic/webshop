@@ -16,7 +16,13 @@
                         <a href="./login.php" class="nav-link link-icon shadow-custom">Ulogujte se</a>
                         <!-- <a href="./register.php" class="nav-link link-icon shadow-custom">Registrujte se</a> -->
                     <?php else : ?>
+                        <?php if($_SESSION['user']['role'] == "user"):?>
                         <a href="./account.php" class="nav-link link-icon shadow-custom"><?php echo $_SESSION['user']['username']; ?> - Moj nalog</a>
+                        <?php elseif($_SESSION['user']['role'] == 'seller'):?>
+                        <a href="./seller.php" class="nav-link link-icon shadow-custom"><?php echo $_SESSION['user']['username']; ?> - Moj nalog</a>
+                        <?php elseif($_SESSION['user']['role'] == 'admin'):?>
+                        <a href="./admin.php" class="nav-link link-icon shadow-custom"><?php echo $_SESSION['user']['username']; ?> - Moj nalog</a>
+                        <?php endif;?>
                         <a href="./logout.php" class="nav-link link-icon shadow-custom">Odjavite se</a>
                     <?php endif ?>
                 </div>

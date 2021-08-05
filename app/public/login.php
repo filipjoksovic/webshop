@@ -30,7 +30,7 @@
             <p class="form-text text-muted text-center">
                 Nemate nalog? Registrujte se <a href="./register.php">ovde</a>.
             </p>
-            <button type="submit" class="btn btn-primary btn-block">Uloguj se</button>
+            <button type="submit" class="neumorphic-button w-100">Uloguj se</button>
         </form>
     </div>
 </body>

@@ -52,7 +52,7 @@
                                 <div class="product-action shadow-custom border-animate-warning"><i class="fas fa-edit  action-icon"></i>
                                     <span class="action-text">Izmeni proizvod</span>
                                 </div>
-                                <div class="product-action shadow-custom border-animate-danger" data-toggle="modal" data-target="#deleteConfirm" onclick = "prepareDelete(<?php echo $product->id;?>)"><i class="fas fa-trash  action-icon"></i>
+                                <div class="product-action shadow-custom border-animate-danger" data-toggle="modal" data-target="#deleteConfirm" onclick="prepareDelete(<?php echo $product->id; ?>)"><i class="fas fa-trash  action-icon"></i>
                                     <span class="action-text">Ukloni proizvod</span>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
     </div>
     <div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-default px-5 py-3 br-2">
                 <div class="modal-header">
                     <h5 class="modal-title">Potvrda uklanjanja</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -77,11 +77,11 @@
                         Uklanjanjem proizvoda iz baze podataka brisu se svi tragovi postojanja proizvoda u prodavnici, ukljucujuci statistiku prodaje. <br>
                         Nastavi dalje?
                     </div>
-                    <input type="hidden" id = "delete_id">
+                    <input type="hidden" id="delete_id">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Otkazi</button>
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Nastavi</button>
+                    <button type="button" class="neumorphic-button px-5 py-3 border-animate-warning" data-dismiss="modal">Otkazi</button>
+                    <button type="button" class="neumorphic-button px-5 py-3 border-animate-danger" onclick="confirmDelete()">Nastavi</button>
                 </div>
             </div>
         </div>
@@ -97,8 +97,8 @@
     </script>
     <!-- Modal -->
     <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content  bg-default px-5 py-3 br-2">
                 <div class="modal-header">
                     <h5 class="modal-title">Dodavanje proizvoda</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -106,39 +106,35 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="../controllers/ProductController.php" enctype="multipart/form-data">
-                        <div class="container-fluid">
-                            <div class="form-group">
-                                <label for="offerName">Naziv proizvoda</label>
-                                <input type="text" name="product_name" id="product_name" class="form-control" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="category">Kategorija</label>
-                                <select type="text" name="category" id="category" class="form-control" placeholder=""></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Cena</label>
-                                <input type="number" id="price" name="price" class="form-control" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="stock">Stanje</label>
-                                <input type="number" id="stock" name="stock" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Opis</label>
-                                <textarea class="form-control" name="product_description" id="description"></textarea>
-                            </div>
-                            <div id="imageInputs">
-                                <div class="input-group mb-3">
-                                    <div class="custom-file cf-1">
-                                        <input type="file" class="custom-file-input" name="product_images[]" id="productImage" accept="image/png, image/gif, image/jpeg, image/webp" aria-describedby="inputGroupFileAddon01">
-                                        <label class="custom-file-label" for="productImage">Odaberi sliku</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-primary" id="addImage">Dodaj jos slika</button>
-                            <input type="hidden" name="add_product" value=1>
+                    <form class="neumorphic-form" method="POST" action="../controllers/ProductController.php" enctype="multipart/form-data">
+                        <div class="neumorphic-input-container my-2">
+                            <input class="neumorphic-input p-3" required="required" type="text" name="product_name" id="product_name" class="form-control" placeholder="">
+                            <label class="neumorphic-label" for="offerName">Naziv proizvoda</label>
                         </div>
+                        <div class="neumorphic-input-container my-1">
+                            <select class="neumorphic-input p-3" type="text" name="category" id="category" required="required" placeholder=""></select>
+                            <label class="neumorphic-label" for="category">Kategorija</label>
+                        </div>
+                        <div class="neumorphic-input-container my-1">
+                            <input class="neumorphic-input p-3" required="required" type="number" id="price" name="price" class="form-control" placeholder="">
+                            <label class="neumorphic-label" for="price">Cena</label>
+                        </div>
+                        <div class="neumorphic-input-container my-1">
+                            <input class="neumorphic-input p-3" required="required" type="number" id="stock" name="stock" class="form-control">
+                            <label class="neumorphic-label" for="stock">Stanje</label>
+                        </div>
+                        <div class="neumorphic-input-container my-1">
+                            <textarea class="neumorphic-input p-3" required="required" name="product_description" id="description"></textarea>
+                            <label class="neumorphic-label" for="description">Opis</label>
+                        </div>
+                        <div id="imageInputs">
+                            <div class="image-input m-1">
+                                <input class="d-none finput" onchange="changeFileLabel()" required="required" type="file" name="product_images[]" id="image-input-1" accept="image/png, image/gif, image/jpeg, image/webp" aria-describedby="inputGroupFileAddon01">
+                                <label class="neumorphic-file-label" for="image-input-1">Odaberi sliku</label>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="addImage">Dodaj jos slika</button>
+                        <input type="hidden" name="add_product" value=1>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -149,15 +145,7 @@
         </div>
 
     </div>
-
-    <script>
-        $('#exampleModal').on('show.bs.modal', event => {
-            var button = $(event.relatedTarget);
-            var modal = $(this);
-            // Use above variables to manipulate the DOM
-
-        });
-    </script>
+        
     <script src="../resources/js/seller.js"></script>
 
 </body>
