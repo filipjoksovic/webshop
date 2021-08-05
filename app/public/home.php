@@ -7,12 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pocetna</title>
     <?php include("../components/bootstrap.php"); ?>
+
 </head>
 
 <body>
     <?php include("../components/header.php"); ?>
     <?php include("../components/search.php"); ?>
     <?php include("../components/message.php"); ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
+
     <div id="alertPlaceholder"></div>
     <div class="container">
         <div class="container mt-5">
@@ -20,7 +23,7 @@
             <?php require "../models/ProductModel.php";
             require "../models/UserModel.php";
             require "../models/CategoryModel.php";
-
+            require "../models/ProductReviewModel.php";
             $products = ProductModel::getAllProducts();
             ?>
             <div class="user products-container">
@@ -36,7 +39,16 @@
                             <div class="product-details">
                                 <div class="product-data">
                                     <span class="product-seller">Prodaje: <b><?php echo UserModel::getUsername($product->owner_id); ?></b></span>
-                                    <span class="product-price">Cena: <?php echo $product->price . '.00'; ?></span>
+                                    <span class="product-price">Cena: <?php echo $product->price . '.00 rsd'; ?></span>
+                                    <div class="product-rate text-center">
+                                        <?php $rate = round(ProductReviewModel::getAvgRate($product->id),2);?>
+                                        <?php for($i = 0; $i< $rate; $i++):?>
+                                            <i class = "fas fa-star"></i>
+                                        <?php endfor;?><br>
+                                        <?php for($i = 0; $i < 5 - round($rate,0); $i++):?>
+                                            <i class = "far fa-star"></i>
+                                            <?php endfor;?>
+                                    </div>
                                 </div>
                                 <div class="product-actions mb-2">
                                     <?php if ($product->stock > 0) : ?>

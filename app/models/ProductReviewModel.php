@@ -12,10 +12,18 @@
             if(isset($review_data['id'])){
                 $this->id = $review_data['id'];
             }
-        $this->product_id = $review_data['product_id'];
-        $this->user_id = $review_data['user_id'];
-        $this->review = $review_data['review'];
-        $this->rate = $review_data['rate'];
+            if(isset($review_data['product_id'])){
+                $this->product_id = $review_data['product_id'];
+            }
+            if(isset($review_data['user_id'])){
+                $this->user_id = $review_data['user_id'];
+            }
+            if(isset($review_data['review'])){
+                $this->review = $review_data['review'];
+            }
+            if(isset($review_data['rate'])){
+                $this->rate = $review_data['rate'];
+            }
         if (isset($review_data['created_at'])) {
             $this->created_at = $review_data['created_at'];
         }
@@ -38,7 +46,7 @@
         public function update(){
             require "../controllers/DatabaseController.php";
 
-            $query = "UPDATE product_reviews SET rate = $this->rate, review = '{$this->review}', updated_at = CURRENT_TIMESTAMP";
+            $query = "UPDATE product_reviews SET rate = $this->rate, review = '{$this->review}', updated_at = CURRENT_TIMESTAMP WHERE product_id = {$this->product_id} AND user_id = {$this->user_id}";
 
             if($database->query($query) === TRUE){
                 return 1;
@@ -82,6 +90,14 @@
                 array_push($reviews, $review);
             }
             return $reviews;
+        }
+        public static function getAvgRate($product_id){
+            require "../controllers/DatabaseController.php";
+
+            $query = "SELECT AVG(rate) as 'rate' FROM product_reviews WHERE product_id = {$product_id}";
+            $result = $database->query($query)->fetch_assoc();
+            $rate = $result['rate'];
+            return $rate;
         }
     }
 ?>

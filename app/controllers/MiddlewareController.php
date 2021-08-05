@@ -21,4 +21,9 @@
         setMessage('Nazalost, nemate pristup prodavackom delu. Proverite vase podatke za logovanje i pokusajte ponovo.',500);
         header("location:../index.php");
     }
+    if(str_contains($uri,'checkout') && $user['role'] == 'guest'){
+    setMessage('Nazalost, nemate pristup placanju. Ulogujte se i pokusajte ponovo.',500);
+    header("location:../index.php");
+    }
+
 ?>

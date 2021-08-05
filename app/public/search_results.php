@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rezultati pretrage</title>
     <?php include("../components/bootstrap.php"); ?>
+
 </head>
 
 <body>
     <?php include("../components/header.php"); ?>
     <?php include("../components/message.php"); ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
     <?php include("../models/ProductModel.php"); ?>
     <?php include("../models/ProductImageModel.php"); ?>
     <?php include("../models/CategoryModel.php"); ?>
@@ -19,6 +21,9 @@
     <?php
     $search_text = $_GET['search_text'];
     $products = ProductModel::getSearchProducts($search_text);
+    if (isset($_GET['sort'])) {
+        $products = ProductModel::getSearchProductsSorted($_GET['sort']);
+    }
     foreach ($products as $product) {
         $product->main_image = ProductImageModel::getMainImage($product->id);
         $product->category_title = CategoryModel::getCategoryTitle($product->category_id);
@@ -32,12 +37,12 @@
             <div class="container text-center">
                 <h5>Sortiraj po:</h5>
                 <div class="sort-options">
-                    <div class="sort-option product-action border-animate-primary">
+                    <div class="sort-option product-action border-animate-primary <?php if (isset($_GET['sort']) && $_GET['sort'] == "DESC") echo 'active' ?>" onclick="location.href = './search_results.php?search_text=<?php echo $_GET['search_text'] . '&sort=DESC'; ?>'">
                         <i class="fas fa-dollar-sign"></i>
                         <i class="fas fa-chevron-down"></i>
                         <div class="action-text">Ceni opadajuce</div>
                     </div>
-                    <div class="sort-option product-action border-animate-danger">
+                    <div class="sort-option product-action border-animate-danger <?php if (isset($_GET['sort']) && $_GET['sort'] == "ASC") echo 'active' ?>" onclick="location.href = './search_results.php?search_text=<?php echo $_GET['search_text'] . '&sort=ASC'; ?>'">
                         <i class="fas fa-dollar-sign"></i>
                         <i class="fas fa-chevron-up"></i>
                         <div class="action-text">Ceni rastuce</div>
@@ -71,7 +76,7 @@
                                             <span class="action-text">Nema na stanju</span>
                                         </div>
                                     <?php endif; ?>
-                                    <div class="product-action shadow-custom border-animate-primary" onclick = "addToWishlist(<?php echo $product->id;?>)"><i class="fas fa-bookmark action-icon"></i>
+                                    <div class="product-action shadow-custom border-animate-primary" onclick="addToWishlist(<?php echo $product->id; ?>)"><i class="fas fa-bookmark action-icon"></i>
                                         <span class="action-text">Dodaj u listu zelja</span>
                                     </div>
                                     <a href="./product_details.php?product_id=<?php echo $product->id; ?>" class="product-action shadow-custom border-animate-primary">

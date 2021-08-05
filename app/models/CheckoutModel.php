@@ -93,5 +93,48 @@
                 throw new Exception($database->error);
             }
         }
+        public static function getSellerOrders($seller_id){
+            require "../controllers/DatabaseController.php";
+
+            $query = "SELECT checkout.* FROM checkout INNER JOIN products on products.id = checkout.product_id WHERE products.owner_id = {$seller_id}";
+            $orders = [];
+            $results = $database->query($query);
+            while($row = $results->fetch_assoc()){
+                $checkoutModel = new CheckoutModel($row);
+                $orders[$checkoutModel->ref_no][] = $checkoutModel;
+            }
+            return $orders;
+        }
+        public static function getNumberOfOrders($product_id){
+            require "../controllers/DatabaseController.php";
+
+            $query = "SELECT SUM(quantity) as 'count' FROM checkout WHERE product_id = {$product_id}";
+            $res = $database->query($query)->fetch_assoc();
+
+            return $res['count'];
+        }
+        public static function allowOrder($ref_no){
+            require "../controllers/DatabaseController.php";
+
+            $query = "UPDATE checkout SET processed = 1 WHERE ref_no = '{$ref_no}'";
+            if($database->query($query) === TRUE){
+                return 1;
+            }
+            else{
+                throw new Exception($database->error);
+                return -1;
+            }
+        }
+        public static function disableOrder($ref_no){
+            require "../controllers/DatabaseController.php";
+
+            $query = "UPDATE checkout SET processed = 0 WHERE ref_no = '{$ref_no}'";
+            if ($database->query($query) === TRUE) {
+                return 1;
+            } else {
+                throw new Exception($database->error);
+                return -1;
+            }
+        }
     }
 ?>

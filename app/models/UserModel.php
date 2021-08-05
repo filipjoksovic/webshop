@@ -19,7 +19,7 @@ class UserModel{
         $this->last_name = $user_data['last_name'];
         $this->email = $user_data['email'];
         $this->password = $user_data['password'];
-        if(isset($this->role)){
+        if(isset($user_data['role'])){
             $this->role = $user_data['role'];
         }
         if (isset($user_data['created_at'])) {
