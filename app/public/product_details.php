@@ -7,26 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalji proizvoda</title>
     <?php include "../components/bootstrap.php"; ?>
+
 </head>
 
 <body>
     <?php include "../components/header.php"; ?>
     <?php include "../components/message.php"; ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
+
     <div id="alertPlaceholder"></div>
     <?php
     require "../models/ProductModel.php";
     require "../models/ProductImageModel.php";
     require "../models/ProductReviewModel.php";
     require "../models/SessionModel.php";
+    require "../models/UserModel.php";
+
     $product_id = $_GET['product_id'];
     $product = ProductModel::getProductDetails($product_id);
     // $product->id = $product_id;
     $product->main_image = ProductImageModel::getMainImage($product->id);
     $product->images = ProductImageModel::getProductImages($product->id);
-    if(SessionModel::isLoggedIn()){
+    if (SessionModel::isLoggedIn()) {
         $reviewable = $product->checkIfReviewable();
         if ($reviewable) {
             $review = ProductReviewModel::getReview($product_id, $_SESSION['user']['uid']);
+            if($review->id === NULL){
+                $review = NULL;
+            }
         }
     }
     $reviews = ProductReviewModel::getAllProductReviews($product_id);
@@ -37,8 +45,8 @@
                 <img src="<?php echo $product->main_image; ?>" id="mainImage">
             </div>
             <div class="thumbnails">
-                <?php foreach ($product->images as $image) : ?>
-                    <img class="thumbnail" src="<?php echo $image->path; ?>">
+                <?php $i = 0; foreach ($product->images as $image) : $i++;?>
+                    <img class="thumbnail" src="<?php echo $image->path; ?>" id = "tb-<?php echo $i;?>" onclick = "setActive()">
                 <?php endforeach ?>
             </div>
         </div>
@@ -49,11 +57,16 @@
             <?php endif; ?>
             <span class="product-price"><?php echo $product->price . ".00 rsd"; ?></span>
             <span class="product-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+                <?php $rate = round(ProductReviewModel::getAvgRate($product->id),2); ?>
+                <?php for ($i = 0; $i < $rate; $i++) : ?>
+                    <i class="fas fa-star"></i>
+                <?php endfor; ?>
+                <?php for ($i = 0; $i < 5 - round($rate,0); $i++) : ?>
+                    <i class="far fa-star"></i>
+                <?php endfor; ?>
+                <br>
+                <small>(<?php echo $rate;?>)</small>
+
             </span>
         </div>
         <div class="showcase-actions shadow-custom">
@@ -100,6 +113,7 @@
                             <input type="hidden" name="leave_review">
                             <button type="submit" class="neumorphic-button"><?php if (isset($review)) echo 'Azuriraj';
                                                                             else echo 'Sacuvaj'; ?></button>
+                        </div>
                     </form>
                 <?php else : ?>
                     <h4 class="text-center">Trenutno nije omoguceno ocenjivanje proizvoda. Kada porudzbina bude procesovana, mozete se vratiti i proizvodu dati ocenu.</h4>
@@ -109,9 +123,11 @@
                     <h4 class="text-center">Morate biti ulogovani da biste ostavili ocenu na proizvod. Ulogujte se i pokusajte ponovo.</h4>
                     <a href="./login.php" class="d-block text-center">Uloguj me.</a>
                 </div>
+        </div>
 
             <?php endif; ?>
-        </div>
+    </div>
+
         <div class="product-reviews">
             <?php foreach ($reviews as $review) : ?>
                 <div class="product-review shadow-custom">
@@ -122,13 +138,12 @@
                             </div>
                             <div class="username">
                                 <?php
-                                require "../models/UserModel.php";
                                 $username = UserModel::getUsername($review->user_id);
                                 echo $username;
                                 ?>
 
                             </div>
-                            
+
                         </div>
                         <div class="product-rate">
                             <?php for ($i = 0; $i < $review->rate; $i++) : ?>

@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja korpa</title>
     <?php include("../components/bootstrap.php"); ?>
+
 </head>
 
 <body>
     <?php require("../components/header.php"); ?>
     <?php require("../components/message.php"); ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
+
     <div id="alertPlaceholder"></div>
     <?php
     require("../models/ProductModel.php");

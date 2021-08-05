@@ -15,7 +15,6 @@
         $profile_data['city']= $_POST['city'];
         $profile_data['country']= $_POST['country'];
         $payment= $_POST['payment'];
-        $profile_id;
         $profileModelInstance = new ShippingProfileModel($profile_data);
 
         if(ShippingProfileModel::exists($profileModelInstance->user_id) === TRUE){
@@ -75,6 +74,36 @@
             $status['message'] = "Greska pri otkazivanju porudzbine";
         }
         finally{
+            echo json_encode($status);
+        }
+    }
+    if(isset($_POST['allow_order'])){
+        $ref_no = $_POST['ref_no'];
+        $status = [];
+        try {
+            $result = CheckoutModel::allowOrder($ref_no);
+            // echo $result;
+            $status['status'] = 200;
+            $status['message'] = "Uspesno odobrena porudzbina";
+        } catch (Exception $e) {
+            $status['status'] = 500;
+            $status['message'] = $e->getMessage();
+        } finally {
+            echo json_encode($status);
+        }
+    }
+    if (isset($_POST['disable_order'])) {
+        $ref_no = $_POST['ref_no'];
+        $status = [];
+        try {
+            $result = CheckoutModel::disableOrder($ref_no);
+            // echo $result;
+            $status['status'] = 200;
+            $status['message'] = "Uspesno otkazana porudzbina";
+        } catch (Exception $e) {
+            $status['status'] = 500;
+            $status['message'] = "Greska pri otkazivanju porudzbine";
+        } finally {
             echo json_encode($status);
         }
     }

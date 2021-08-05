@@ -32,6 +32,11 @@
         }
     }
     if(isset($_POST['register'])){
+        if($_POST['role'] == null){
+            setMessage("Molimo odaberite tip korisnika kog registrujete",500);
+            header("location:../public/register.php");
+            return;
+        }
         $user_data = [];
         $user_data['username'] = $_POST['username'];
         $user_data['first_name'] = $_POST['first_name'];
@@ -69,6 +74,7 @@
         }
         else{
             setMessage("Korisnik sa ovim korisnickim imenom vec postoji. Odaberite novo korisnicko ime i pokusajte ponovo.",500);
+            header("location:../public/register.php");
         }
     }
     if(isset($_GET['find_user'])){

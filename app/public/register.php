@@ -7,10 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prijavite se</title>
     <?php include("../components/bootstrap.php"); ?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
+
 </head>
 
 <body>
     <?php include("../components/header.php"); ?>
+    <?php include("../components/message.php");?>
+    <?php include("../controllers/MiddlewareController.php"); ?>
+
     <div class="container mt-5">
         <h1 class="text-center">Prijavite se na vas nalog</h1>
         <h4 class="text-center">Unesite podatke navedene u formi kako biste se prijavili na vas nalog</h4>
